@@ -23,7 +23,9 @@ export default function loginForm() {
 
     return (
         <form className={styles.container}>
-            <header>CodingThoughts</header>
+            <div className={styles.title}>
+                <header>Sign Up Here</header>
+            </div>
             <div className={styles.entries}>
                 <input onChange={(e) => {setEmail(e.target.value)}} placeholder="Enter email or username"></input>
                 <input onChange={(e) => {setPassword(e.target.value)}} placeholder="Enter Password"></input>
