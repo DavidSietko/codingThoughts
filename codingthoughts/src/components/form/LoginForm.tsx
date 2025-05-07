@@ -23,16 +23,18 @@ export default function loginForm() {
 
     return (
         <form className={styles.container}>
-            <div className={styles.title}>
-                <header>Sign Up Here</header>
-            </div>
+            <header className={styles.title}>Log in Here</header>
             <div className={styles.entries}>
-                <input onChange={(e) => {setEmail(e.target.value)}} placeholder="Enter email or username"></input>
-                <input onChange={(e) => {setPassword(e.target.value)}} placeholder="Enter Password"></input>
+                <input className={styles.input} onChange={(e) => {setEmail(e.target.value)}} placeholder="Enter email or username"></input>
+                <input className={styles.input} onChange={(e) => {setPassword(e.target.value)}} placeholder="Enter Password"></input>
+                <button className={styles.button} onClick={loginUser}>Login</button>
             </div>
-            <div className={styles.buttons}>
-                <button onClick={loginUser}>Login</button>
-                <button onClick={signupUser}>Sign up</button>
+            <div className={styles.bottom}>
+                <span>If a new user:</span>
+                <div className={styles.linksContainer}>
+                    <a className={styles.links}>Forgot Password?</a>
+                    <a className={styles.links} href="/signup" rel="Sign up">Sign up</a>
+                </div>
             </div>
         </form>
     );
