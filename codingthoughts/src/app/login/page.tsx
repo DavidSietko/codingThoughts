@@ -1,3 +1,5 @@
+"use client";
+
 import LoginForm from '@/components/form/LoginForm';
 import styles from "./page.module.css";
 
