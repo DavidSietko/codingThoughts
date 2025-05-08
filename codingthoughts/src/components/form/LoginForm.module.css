@@ -1,0 +1,100 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: clamp(300px, 50%, 600px);
+    height: 500px;
+    background-color: var(--secondary);
+
+    border: 5px solid gray;
+    border-radius: var(--border-radius);
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 15%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-size: var(--small-title-size);
+}
+
+.entries {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 80%;
+    height: auto;
+    flex: 1;
+
+    text-align: center;
+}
+
+.passwordEntry {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-end;
+
+}
+
+.icon {
+    position: absolute;
+    margin-right: 10px;
+    margin-top: 10px;
+    z-index: 1000;
+}
+
+.input {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 30px;
+}
+
+.input:hover {
+    border: 2px solid black;
+}
+
+.container button {
+    width: 100%;
+    height: var(--small-button-height);
+    border-radius: var(--border-radius);
+
+    font-size: var(--small-button-font);
+    color: var(--secondary);
+    background-color: var(--main);
+
+}
+
+.bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    width: 100%;
+    height: 30%;
+
+}
+
+.bottom span {
+    font-size: clamp(1.6rem, 5vw, 2.5rem);
+}
+
+.linksContainer {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    height: auto;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.links {
+    font-size: var(--small-font);
+}
