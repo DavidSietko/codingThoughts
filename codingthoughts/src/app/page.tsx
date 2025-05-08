@@ -22,7 +22,7 @@ export default function Home() {
         <header className={styles.title}>CODING THOUGHTS</header>
         <hr></hr>
         <span className={styles.subtitle}>A place to store your boundless coding thoughts</span>
-        <button className={styles.button} onClick={go}>GO</button>
+        <button className={styles.button} onClick={go}>EXPLORE</button>
       </div>
     </div>
   );
