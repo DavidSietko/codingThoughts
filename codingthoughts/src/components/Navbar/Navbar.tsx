@@ -11,9 +11,9 @@ export default function Navbar() {
             </div>
             <div className={styles.tags}>
                 {list.map((item, index) => (
-                    <div className={styles.tag}>
+                    <div className={styles.tag} key={index}>
                         <div className={styles.vl}></div>
-                        <a href={`/${item}`} key={index}>{item}</a>
+                        <a href={`/${item}`}>{item}</a>
                     </div>
                 ))}
             </div>

@@ -3,11 +3,12 @@
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    width: 100%;
+    width: var(--width);
     height: var(--navbar-height);
+    z-index: 1;
 
     background: var(--main);
-    box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.7);
+    box-shadow: 1 4px 6px -1px rgba(255, 255, 255, 0.7);
 }
 
 a:hover {

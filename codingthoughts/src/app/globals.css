@@ -22,8 +22,8 @@ button:active {
 
   --navbar-height: 80px;
 
-  --width: 100%;
-  --height: 100% - var(--navbar-height);
+  --width: 100vw;
+  --height: calc(100dvh - var(--navbar-height));
 
 
   --title-size: clamp(36px, 10vw, 120px);
