@@ -23,7 +23,7 @@ button:active {
   --navbar-height: 50px;
 
   --width: 100%;
-  --height: var(100dvh - var(--navbar-height));
+  --height: 100% - var(--navbar-height);
 
 
   --title-size: clamp(36px, 10vw, 120px);

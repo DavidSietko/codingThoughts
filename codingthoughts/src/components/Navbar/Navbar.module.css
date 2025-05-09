@@ -8,3 +8,13 @@
 
     background: var(--navbar-background);
 }
+
+.tags {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    gap: 10px;
+}
+
+.homeTag {
+}
