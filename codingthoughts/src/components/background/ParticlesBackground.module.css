@@ -7,5 +7,5 @@
   height: 100%;
   z-index: -1;
   pointer-events: none;
-  background: linear-gradient(to bottom, var(--main), var(--secondary));
+  background: var(--background-colour);
 }
