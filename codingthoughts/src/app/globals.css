@@ -20,6 +20,12 @@ button:active {
   --main: blue;
   --secondary: white;
 
+  --navbar-height: 80px;
+
+  --width: 100vw;
+  --height: calc(100dvh - var(--navbar-height));
+
+
   --title-size: clamp(36px, 10vw, 120px);
   --small-title-size: clamp(24px, 5vw, 72px);
 
@@ -33,4 +39,10 @@ button:active {
   --small-button-font: clamp(1.4rem, 2vw, 2.2rem);
 
   --small-font: clamp(1rem, 2vw, 1.6rem);
+
+  --background-colour: linear-gradient(to bottom, var(--main), var(--secondary));
+  --navbar-background: linear-gradient(to left, var(--main), var(--secondary));
+
+  --line-gap: 20px;
+  --navbar-font-size: clamp(1.2rem, 3vw, 1.8rem);
 }
