@@ -1,14 +1,22 @@
 import { useState } from "react";
 import styles from "./LoginForm.module.css";
 import PasswordEntry from "./PasswordEntry";
+import { handleSignup } from "@/app/lib/auth";
 
 export default function SignupForm() {
-    // useState for the email and username
+    // useState for the username, email, password and errorMessage
     const [email, setEmail] = useState<string>("");
     const [username, setUsername] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [errorMessage, setErrorMessage] = useState<string>("");
 
-    const signupUser = () => {
-
+    const signupUser = async () => {
+        try {
+            const data = handleSignup(username, email, password);
+        }
+        catch(error: any) {
+            setErrorMessage(error.message);
+        }
     }
 
     return (
@@ -17,7 +25,7 @@ export default function SignupForm() {
             <div className={styles.entries}>
                 <input type="text" className={styles.input} onChange={(e) => {setUsername(e.target.value)}} placeholder="Enter a username"></input>
                 <input type="text" className={styles.input} onChange={(e) => {setEmail(e.target.value)}} placeholder="Email"></input>
-                <PasswordEntry placeholder="Enter Password"/>
+                <PasswordEntry password={password} setPassword={setPassword} placeholder="Enter Password"/>
                 <button type="submit" className={styles.button} onClick={signupUser}>Sign Up</button>
             </div>
         </form>

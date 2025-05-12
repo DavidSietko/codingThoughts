@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 import { prisma } from '../../lib/prismaClient/prismaClient';
-import { CookieListItem } from 'next/dist/compiled/@edge-runtime/cookies';
 
 export async function POST(req: Request) {
     const {email, password} = await req.json();
