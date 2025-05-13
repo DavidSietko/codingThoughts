@@ -1,11 +1,14 @@
-export async function handleLogin(email: string, password: string) {
+export async function handleLogin(email: string, password: string): Promise<{ message: string }> {
 
     const response = await fetch("/api/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({email, password})
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
         });
 
     const data = await response.json();
@@ -15,6 +18,7 @@ export async function handleLogin(email: string, password: string) {
     }
     // Return the data
     alert("Login Successful, hurray");
+    console.log(data);
     return data;
 }
 

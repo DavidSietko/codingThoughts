@@ -18,8 +18,8 @@
     align-items: center;
     width: 100%;
     height: 15%;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-top: 20px;
+    margin-bottom: 30px;
     font-size: var(--small-title-size);
 }
 
@@ -97,4 +97,10 @@
 
 .links {
     font-size: var(--small-font);
+}
+
+.error {
+    height: 10px;
+    color: red;
+    font-size: var(--mini-font);
 }

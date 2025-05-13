@@ -5,11 +5,11 @@ import bcrypt from 'bcryptjs';
 export async function POST(req: any) {
     // Get username, email and password using desctructuring
     console.log("Trying to sign the user up !2121212");
-    const data = await req.json();
+    const {username, email, password} = await req.json();
 
     // Check if the email is unique
     const existingEmail = await prisma.user.findUnique({
-        where: {email: data.email}
+        where: {email: email}
     });
 
     if(existingEmail) {
@@ -18,20 +18,20 @@ export async function POST(req: any) {
 
     // Check if username is unique
     const existingUsername = await prisma.user.findUnique({
-        where: {username: data.username}
+        where: {username: username}
     });
 
     if(existingUsername) {
         return NextResponse.json({ message: "This username is already taken. Please choose a different username" }, { status: 400 });
     }
     // Hash the password for encryption
-    const hashedPassword: string = await bcrypt.hash(data.password, 10);
+    const hashedPassword: string = await bcrypt.hash(password, 10);
 
     // Create the new user
     await prisma.user.create({
         data: {
-            username: data.username,
-            email: data.email,
+            username: username,
+            email: email,
             password: hashedPassword
         }
     });

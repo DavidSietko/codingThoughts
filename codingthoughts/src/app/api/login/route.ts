@@ -1,13 +1,12 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '../../lib/prismaClient/prismaClient';
+import bcrypt from 'bcryptjs';
 
 export async function POST(req: Request) {
-    const bodyText = await req.text();
-    console.log("Raw body:", bodyText);
-    const { username, email, password } = JSON.parse(bodyText);
+    const {email, password } = await req.json();
 
     const user = await prisma.user.findUnique({
-        where: { email },
+        where: { email: email },
         include: { answers: true }
     })
 
@@ -17,10 +16,10 @@ export async function POST(req: Request) {
     }
 
     // check if the password is valid
-    const isValidPassword = user.password;
+    const isValidPassword: boolean = await bcrypt.compare(password, user.password);
 
     if(!isValidPassword) {
-        return NextResponse.json({ message: "Invalid Password!"}, { status: 401 });
+        return NextResponse.json({ message: "Invalid Password! Check if password is correct."}, { status: 401 });
     }
 
     // Create the response
