@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./LoginForm.module.css";
 import PasswordEntry from "./PasswordEntry";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { handleLogin } from "@/app/lib/auth";
 import ErrorMessage from "./ErrorMessage";
 
@@ -12,6 +12,9 @@ export default function LoginForm() {
     const [password, setPassword] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>("");
 
+    // Create a router to re-route user to main page after login
+    const router = useRouter();
+
     const loginUser = async (e: React.FormEvent) => {
         e.preventDefault();
         if(!email || !password) {
@@ -20,6 +23,7 @@ export default function LoginForm() {
         else {
             try {
                 const data = await handleLogin(email, password);
+                router.push("/main");
             } catch (error: any) {
                 // Show user-friendly error
                 setErrorMessage(error.message);
