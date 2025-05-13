@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import styles from "./LoginForm.module.css";
 import PasswordEntry from "./PasswordEntry";
 import { handleSignup } from "@/app/lib/auth";
+import ErrorMessage from "./ErrorMessage";
 
 export default function SignupForm() {
     // useState for the username, email, password and errorMessage and message display state
@@ -9,7 +10,6 @@ export default function SignupForm() {
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>("");
-    const [display, setDisplay] = useState<boolean>(false);
 
     const signupUser = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -21,17 +21,10 @@ export default function SignupForm() {
         }
     }
 
-    // useEffect hook to re-render to display the errorMessage
-    useEffect((() => {
-        setTimeout(() => {
-            setErrorMessage("");
-        }, 7000);
-    }), [errorMessage]);
-
     return (
         <form className={styles.container}>
             <header className={styles.title}>Create Account</header>
-            <p className={styles.error}>{errorMessage}</p>
+            <ErrorMessage errorMessage={errorMessage} setErrorMessage={setErrorMessage} />
             <div className={styles.entries}>
                 <input type="text" className={styles.input} onChange={(e) => {setUsername(e.target.value)}} placeholder="Enter a username"></input>
                 <input type="text" className={styles.input} onChange={(e) => {setEmail(e.target.value)}} placeholder="Email"></input>
