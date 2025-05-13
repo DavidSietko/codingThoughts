@@ -56,10 +56,6 @@
     margin-bottom: 30px;
 }
 
-.input:hover {
-    border: 2px solid black;
-}
-
 .container button {
     width: 100%;
     height: var(--small-button-height);

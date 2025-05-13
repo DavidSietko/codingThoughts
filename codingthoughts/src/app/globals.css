@@ -16,6 +16,10 @@ button:active {
   transform: scale(0.95);
 }
 
+input:hover {
+  border: 3px solid black;
+}
+
 :root {
   --main: blue;
   --secondary: white;
