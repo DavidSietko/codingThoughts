@@ -5,14 +5,18 @@ import bcrypt from 'bcryptjs';
 export async function POST(req: Request) {
     const {email, password } = await req.json();
 
-    const user = await prisma.user.findUnique({
-        where: { email: email },
-        include: { answers: true }
-    })
+    const user = await prisma.user.findFirst({
+        where: {
+            OR: [
+                { email: email },
+                { username: email }
+            ],
+        },
+    });
 
     // check if the user can be found
     if(!user) {
-        return NextResponse.json({ message: "User not found. Check Email spelling"}, { status: 400});
+        return NextResponse.json({ message: "User not found. Check email or username spelling."}, { status: 400});
     }
 
     // check if the password is valid

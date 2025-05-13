@@ -3,6 +3,7 @@ import styles from "./LoginForm.module.css";
 import PasswordEntry from "./PasswordEntry";
 import { Router, useRouter } from "next/router";
 import { handleLogin } from "@/app/lib/auth";
+import ErrorMessage from "./ErrorMessage";
 
 
 export default function LoginForm() {
@@ -11,12 +12,18 @@ export default function LoginForm() {
     const [password, setPassword] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>("");
 
-    const loginUser = async () => {
-       try {
-            const data = await handleLogin(email, password);
-        } catch (error: any) {
-            // Show user-friendly error
-            setErrorMessage(error.message);
+    const loginUser = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if(!email || !password) {
+            setErrorMessage("Make sure all entries are filled in!")
+        }
+        else {
+            try {
+                const data = await handleLogin(email, password);
+            } catch (error: any) {
+                // Show user-friendly error
+                setErrorMessage(error.message);
+            }
         }
     }
 
@@ -24,6 +31,7 @@ export default function LoginForm() {
         <form className={styles.container}>
             <header className={styles.title}>Log in Here</header>
             <div className={styles.entries}>
+                <ErrorMessage errorMessage={errorMessage} setErrorMessage={setErrorMessage} />
                 <input type="text" value={email} className={styles.input} onChange={(e) => {setEmail(e.target.value)}} placeholder="Enter email or username"></input>
                 <PasswordEntry password={password} setPassword={setPassword} placeholder="Enter Password"/>
                 <button type="submit" className={styles.button} onClick={loginUser}>Login</button>

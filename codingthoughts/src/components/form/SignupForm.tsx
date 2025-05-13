@@ -3,6 +3,7 @@ import styles from "./LoginForm.module.css";
 import PasswordEntry from "./PasswordEntry";
 import { handleSignup } from "@/app/lib/auth";
 import ErrorMessage from "./ErrorMessage";
+import { useRouter } from "next/navigation";
 
 export default function SignupForm() {
     // useState for the username, email, password and errorMessage and message display state
@@ -11,21 +12,30 @@ export default function SignupForm() {
     const [password, setPassword] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>("");
 
+    // defining a router to change the route to login page
+    const router = useRouter();
+
     const signupUser = async (e: React.FormEvent) => {
         e.preventDefault();
-        try {
-            const data = await handleSignup(username, email, password);
+        if(!email || !username || !password) {
+            setErrorMessage("Make sure all entries are filled in!")
         }
-        catch(error: any) {
-            setErrorMessage(error.message);
+        else {
+            try {
+            const data = await handleSignup(username, email, password);
+            router.push("/login");
+            }
+            catch(error: any) {
+                setErrorMessage(error.message);
+            }
         }
     }
 
     return (
         <form className={styles.container}>
             <header className={styles.title}>Create Account</header>
-            <ErrorMessage errorMessage={errorMessage} setErrorMessage={setErrorMessage} />
             <div className={styles.entries}>
+                <ErrorMessage errorMessage={errorMessage} setErrorMessage={setErrorMessage} />
                 <input type="text" className={styles.input} onChange={(e) => {setUsername(e.target.value)}} placeholder="Enter a username"></input>
                 <input type="text" className={styles.input} onChange={(e) => {setEmail(e.target.value)}} placeholder="Email"></input>
                 <PasswordEntry password={password} setPassword={setPassword} placeholder="Enter Password"/>
