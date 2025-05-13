@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '../../lib/prismaClient/prismaClient';
 import bcrypt from 'bcryptjs';
 
-export async function POST(req: any) {
+export async function POST(req: Request) {
     // Get username, email and password using desctructuring
     console.log("Trying to sign the user up !2121212");
     const {username, email, password} = await req.json();

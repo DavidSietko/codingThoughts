@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '../../lib/prismaClient/prismaClient';
 import bcrypt from 'bcryptjs';
+import { cookies } from 'next/headers';
 
 export async function POST(req: Request) {
     const {email, password } = await req.json();
@@ -37,4 +38,26 @@ export async function POST(req: Request) {
     });
 
     return response;
+}
+
+export async function GET() {
+    const userCookies = await cookies();
+    const userId = userCookies.get("userId")?.value;
+
+    // check if cookie exists
+    if(!userId) {
+        return NextResponse.json({ message: "No ID found. User not logged in yet." }, { status: 401 });
+    }
+
+    // Check if the userId that was retrieved is a valid ID
+    const user = prisma.user.findUnique({
+        where: { id: userId }
+    });
+
+    if(!user) {
+        return NextResponse.json({ message: "Invalid ID." }, { status: 401 });
+    }
+
+    // Else valid id found. User is logged in
+    return NextResponse.json({ message: "Valid ID. User is logged in." });
 }
