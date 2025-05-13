@@ -12,7 +12,8 @@ export default function SignupForm() {
 
     const signupUser = async () => {
         try {
-            const data = handleSignup(username, email, password);
+            alert(`Vales: ${username}, ... , ${email},..., ${password}`);
+            const data = await handleSignup(username, email, password);
         }
         catch(error: any) {
             setErrorMessage(error.message);

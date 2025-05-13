@@ -11,13 +11,9 @@ export default function LoginForm() {
     const [password, setPassword] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>("");
 
-    // define router to change url
-    const router = useRouter();
-
     const loginUser = async () => {
        try {
             const data = await handleLogin(email, password);
-            router.push("/main");
         } catch (error: any) {
             // Show user-friendly error
             setErrorMessage(error.message);

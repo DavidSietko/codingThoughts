@@ -2,13 +2,14 @@ import { NextResponse } from 'next/server';
 import { prisma } from '../../lib/prismaClient/prismaClient';
 import bcrypt from 'bcryptjs';
 
-export async function POST(req: Request) {
+export async function POST(req: any) {
     // Get username, email and password using desctructuring
-    const {username, email, password} = await req.json();
+    console.log("Trying to sign the user up !2121212");
+    const data = await req.json();
 
     // Check if the email is unique
-    const existingEmail: boolean = await prisma.user.findUnique({
-        where: email
+    const existingEmail = await prisma.user.findUnique({
+        where: {email: data.email}
     });
 
     if(existingEmail) {
@@ -17,20 +18,20 @@ export async function POST(req: Request) {
 
     // Check if username is unique
     const existingUsername = await prisma.user.findUnique({
-        where: username
+        where: {username: data.username}
     });
 
     if(existingUsername) {
         return NextResponse.json({ message: "This username is already taken. Please choose a different username" }, { status: 400 });
     }
     // Hash the password for encryption
-    const hashedPassword: string = await bcrypt.hash(password, 10);
+    const hashedPassword: string = await bcrypt.hash(data.password, 10);
 
     // Create the new user
     await prisma.user.create({
         data: {
-            username,
-            email,
+            username: data.username,
+            email: data.email,
             password: hashedPassword
         }
     });

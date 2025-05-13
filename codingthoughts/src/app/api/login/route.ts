@@ -2,7 +2,9 @@ import { NextResponse } from 'next/server';
 import { prisma } from '../../lib/prismaClient/prismaClient';
 
 export async function POST(req: Request) {
-    const {email, password} = await req.json();
+    const bodyText = await req.text();
+    console.log("Raw body:", bodyText);
+    const { username, email, password } = JSON.parse(bodyText);
 
     const user = await prisma.user.findUnique({
         where: { email },
@@ -15,7 +17,7 @@ export async function POST(req: Request) {
     }
 
     // check if the password is valid
-    const isValidPassword: boolean = user.password;
+    const isValidPassword = user.password;
 
     if(!isValidPassword) {
         return NextResponse.json({ message: "Invalid Password!"}, { status: 401 });
