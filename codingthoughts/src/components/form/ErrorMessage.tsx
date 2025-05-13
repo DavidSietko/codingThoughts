@@ -11,7 +11,7 @@ export default function ErrorMessage(props: Props) {
     useEffect((() => {
         setTimeout(() => {
             props.setErrorMessage("");
-        }, 7000);
+        }, 5000);
     }), [props.errorMessage]);
 
     return(
