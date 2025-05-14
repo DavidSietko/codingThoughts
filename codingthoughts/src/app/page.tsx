@@ -4,15 +4,21 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
 import ParticlesBackground from "@/components/background/ParticlesBackground";
+import { checkAuth } from "./lib/auth";
 
 export default function Home() {
   //router to change route
 
   const router = useRouter();
 
-  // function for button to go to login page
-  const go = () => {
-    router.push("/login")
+  // function for button to go to main page if logged in, else to login page if not
+  const go = async() => {
+    try {
+      await checkAuth();
+      router.push("/main");
+    } catch(error: any) {
+      router.push("/login");
+    }
   }
 
   return (
