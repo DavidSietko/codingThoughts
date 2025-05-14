@@ -53,6 +53,7 @@ input:hover {
   --navbar-font-size: clamp(1.2rem, 3vw, 1.8rem);
 
   --filterbox-width: clamp(300px, 20%, 600px);
-  --answerbox-width: calc(100% - var(--filterbox-width));
-
+  --answerbox-width: calc(95% - var(--filterbox-width));
+  --answerbox-font-specs: clamp(1.2rem, 1vw, 1.8rem);
+  --answerbox-font-title: clamp(1.6rem, 1vw, 2rem);
 }

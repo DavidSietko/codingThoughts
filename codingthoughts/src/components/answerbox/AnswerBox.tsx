@@ -246,9 +246,9 @@ export default function AnswerBox(props: Props) {
                             <p>{answer.title}</p>
                         </div>
                         <div className={styles.specs}>
-                            <p>{`Difficulty: ${answer.difficulty}`}</p>
-                            <p>{`Language: ${answer.language}`}</p>
+                            <p>{`Difficulty: ${answer.difficulty}`} {`Language: ${answer.language}`}</p>
                         </div>
+                        <button className={styles.button}>GO</button>
                     </li>
                 ))}
             </ul>
