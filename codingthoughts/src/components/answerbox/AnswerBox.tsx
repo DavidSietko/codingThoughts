@@ -1,5 +1,7 @@
 import { Answer } from "@/app/lib/types/Answer";
 import styles from "./AnswerBox.module.css";
+import { use, useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface Props {
     name: string,
@@ -7,8 +9,30 @@ interface Props {
 }
 
 export default function AnswerBox(props: Props) {
+    // useStates for currently pressed answer and the answer id used for deletion
+    const [selectedIndex, setIndex] = useState<number | null>(null);
+    const [currentId, setCurrentId] = useState<number | null>(null);
 
-    const mockAnswers: Answer[] = [
+    // router to change route
+    const router = useRouter();
+
+    const setSelectedIndex = (i: number) => {
+        if(selectedIndex === i) {
+            setIndex(null);
+            setCurrentId(null);
+        }
+        else {
+            setIndex(i);
+        }
+    }
+
+    const deleteAnswer = () => {
+        setMockAnswers(mockAnswers.filter((answer) => {return answer.id !== currentId}));
+        setIndex(null);
+        setCurrentId(null);
+    }
+
+    const [mockAnswers, setMockAnswers] = useState<Answer[]>([
   {
     id: 1,
     userId: "user123",
@@ -233,22 +257,27 @@ export default function AnswerBox(props: Props) {
   {
     id: 20, userId: "user999", number: 10, title: "Regular Expression Matching", difficulty: "Hard", language: "Python", explanation: "Use dynamic programming to match complex patterns.", code: `def isMatch(s, p): # omitted for brevity`,
   },
-];
+]);
 
     return (
         <div className={styles.container}>
-            <input className={styles.searchbar} type="text" value={props.name} onChange={(e) => { props.setName(e.target.value)}} placeholder="Enter a name here..."></input>
+            <div className={styles.search}>
+                <input className={styles.searchbar} type="text" value={props.name} onChange={(e) => { props.setName(e.target.value)}} placeholder="Enter a name here..."></input>
+                <button onClick={() => {router.push("/main/create")}}>CREATE</button>
+                {currentId && <button onClick={deleteAnswer}>DELETE</button>}
+            </div>
             <ul className={styles.listContainer}>
                 {mockAnswers.map((answer, index) => (
-                    <li key={index} className={styles.answerContainer}>
+                    <li key={index} className={`${styles.answerContainer} ${selectedIndex === index ? styles.clicked : ""}`} onClick={() => {setCurrentId(answer.id); setSelectedIndex(index);}}>
                         <div className={styles.title}>
                             <p>{`${answer.number}.`}</p>
                             <p>{answer.title}</p>
                         </div>
                         <div className={styles.specs}>
-                            <p>{`Difficulty: ${answer.difficulty}`} {`Language: ${answer.language}`}</p>
+                            <p>{`Difficulty: ${answer.difficulty}`}</p>
+                            <p>{`Language: ${answer.language}`}</p>
                         </div>
-                        <button className={styles.button}>GO</button>
+                        <button>GO</button>
                     </li>
                 ))}
             </ul>
