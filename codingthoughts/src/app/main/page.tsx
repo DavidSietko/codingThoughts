@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import Filterbox from "@/components/filter/Filterbox";
 import { useRouter } from "next/navigation";
+import { checkAuth } from "../lib/auth";
 
 export default function Home() {
     // define a useState for the input
@@ -14,19 +15,14 @@ export default function Home() {
 
     // useEffect on initial render to check if the user is logged in
     useEffect(() => {
-        const checkAuth = async () => {
-            // Get backend response
-            const response = await fetch("/api/login", {
-                method: "GET",
-                credentials: "include"
-            });
-            // If response invalid, re-route user
-            if(!response.ok) {
+        const verifyAuth = async() => {
+            try {
+                await checkAuth();
+            } catch(error: any) {
                 router.push("/login");
             }
         }
-
-        checkAuth();
+        verifyAuth();
     }, []);
 
     return(

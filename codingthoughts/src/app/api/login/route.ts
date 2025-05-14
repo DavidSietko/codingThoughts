@@ -44,7 +44,6 @@ export async function GET() {
     const userCookies = await cookies();
     const userId = userCookies.get("userId")?.value;
 
-    console.log(`USER ID: ${userId}`);
     // check if cookie exists
     if(!userId) {
         return NextResponse.json({ message: "No ID found. User not logged in yet." }, { status: 401 });
