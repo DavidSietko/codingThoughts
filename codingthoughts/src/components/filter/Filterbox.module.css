@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    width: clamp(300px, 20%, 600px);
+    width: var(--filterbox-width);
     height: 100%;
 
     background-color: gray;

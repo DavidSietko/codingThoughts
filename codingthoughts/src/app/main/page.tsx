@@ -3,12 +3,15 @@
 import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import Filterbox from "@/components/filter/Filterbox";
+import AnswerBox from "@/components/answerbox/AnswerBox";
 import { useRouter } from "next/navigation";
 import { checkAuth } from "../lib/auth";
+import { Answer } from "../lib/types/Answer";
 
 export default function Home() {
-    // define a useState for the input
+    // useStates for all values needed
     const [name, setName] = useState<string>("");
+    const [answers, setAnswers] = useState<Answer[]>([]);
 
     // Router to route user back to login page if login check unsuccessful
     const router = useRouter();
@@ -28,7 +31,7 @@ export default function Home() {
     return(
         <div className={styles.container}>
             <Filterbox />
-            <input className={styles.searchbar} type="text" value={name} onChange={(e) => { setName(e.target.value)}} placeholder="Enter a name here..."></input>
+            <AnswerBox name={name} setName={setName}/>
         </div>
     );
 }

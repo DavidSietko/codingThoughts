@@ -26,14 +26,15 @@ input:hover {
 
   --navbar-height: 80px;
 
-  --width: 100%;
-  --height: calc(100% - var(--navbar-height));
+  --width: 100vw;
+  --height: calc(100dvh - var(--navbar-height));
 
 
   --title-size: clamp(36px, 10vw, 120px);
   --small-title-size: clamp(24px, 5vw, 72px);
 
   --border-radius: 20px;
+  --border-colour: gray;
 
   --button-width: clamp(300px, 50%, 600px);
   --button-height: 100px;
@@ -50,4 +51,8 @@ input:hover {
 
   --line-gap: 20px;
   --navbar-font-size: clamp(1.2rem, 3vw, 1.8rem);
+
+  --filterbox-width: clamp(300px, 20%, 600px);
+  --answerbox-width: calc(100% - var(--filterbox-width));
+
 }
