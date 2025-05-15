@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "./CreateForm.module.css";
 import ErrorMessage from "./ErrorMessage";
 import { checkAuth } from "@/app/lib/auth";
+import { useRouter } from "next/navigation";
 
 export default function CreateForm() {
     // useStates for all values for an answer
@@ -17,18 +18,41 @@ export default function CreateForm() {
 
     const difficulties: string[] = ["easy", "medium", "hard"];
 
+    // Create router to route back to create page upon creation of an answer
+    const router = useRouter();
+
     const createAnswer = async() => {
-        if(!number || !title || !difficulty || !language || !explanation) {
+        if(!number || !title || !difficulty || !language || !explanation || !code) {
             setErrorMessage("Make sure all non-optional entries are filled in!");
         }
         else {
             try {
+                // check if user logged in
                 await checkAuth();
+
+                // make the post call to create the answer
                 await fetch("/api/answer/create", {
-
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    credentials: "include",
+                    body: JSON.stringify({
+                        number: number,
+                        title: title,
+                        difficulty: difficulty,
+                        language: language,
+                        description: description,
+                        explanation: explanation,
+                        code: code,
+                        videoLink: link
+                    })
                 })
-            } catch(error: any) {
+                // answer created successfully, go back to main page
+                router.push("/main");
 
+            } catch(error: any) {
+                setErrorMessage(error.message);
             }
         }
     }

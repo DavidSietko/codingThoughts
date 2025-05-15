@@ -46,7 +46,7 @@ export async function GET() {
 
     // check if cookie exists
     if(!userId) {
-        return NextResponse.json({ message: "Not logged in. Please login before proceeding with this acion." }, { status: 401 });
+        return NextResponse.json({ message: "Not logged in. Please login before proceeding with this action." }, { status: 401 });
     }
 
     // Check if the userId that was retrieved is a valid ID
