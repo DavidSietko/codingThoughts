@@ -46,7 +46,7 @@ export async function GET() {
 
     // check if cookie exists
     if(!userId) {
-        return NextResponse.json({ message: "No ID found. User not logged in yet." }, { status: 401 });
+        return NextResponse.json({ message: "Not logged in. Please login before proceeding with this acion." }, { status: 401 });
     }
 
     // Check if the userId that was retrieved is a valid ID
@@ -55,7 +55,7 @@ export async function GET() {
     });
 
     if(!user) {
-        return NextResponse.json({ message: "Invalid ID." }, { status: 401 });
+        return NextResponse.json({ message: "Not logged in. Please login before proceeding with this action." }, { status: 401 });
     }
 
     // Else valid id found. User is logged in

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "./CreateForm.module.css";
 import ErrorMessage from "./ErrorMessage";
+import { checkAuth } from "@/app/lib/auth";
 
 export default function CreateForm() {
     // useStates for all values for an answer
@@ -10,6 +11,7 @@ export default function CreateForm() {
     const [language, setLanguage] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [explanation, setExplanation] = useState<string>("");
+    const [code, setCode] = useState<string>("");
     const [link, setLink] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>("");
 
@@ -20,7 +22,14 @@ export default function CreateForm() {
             setErrorMessage("Make sure all non-optional entries are filled in!");
         }
         else {
-            
+            try {
+                await checkAuth();
+                await fetch("/api/answer/create", {
+
+                })
+            } catch(error: any) {
+
+            }
         }
     }
 
@@ -60,6 +69,10 @@ export default function CreateForm() {
             <div className={styles.detailsContainer}>
                 <span>Enter problem explanation here</span>
                 <textarea value={explanation} onChange={(e) => setExplanation(e.target.value)} placeholder="Explanation" rows={10}></textarea>
+            </div>
+            <div className={styles.detailsContainer}>
+                <span>Enter your code here</span>
+                <textarea value={code} onChange={(e) => setCode(e.target.value)} placeholder="Code" rows={10}></textarea>
             </div>
             <div className={styles.linkContainer}>
                 <span>Video link to solution (optional)</span>
