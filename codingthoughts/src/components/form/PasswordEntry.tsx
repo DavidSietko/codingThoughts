@@ -14,7 +14,7 @@ export default function PasswordEntry(props: Props) {
 
     //function to change the password
     const handlePasswordChange = (e : React.ChangeEvent<HTMLInputElement>) => {
-        props.setPassword(e.target.value);
+        props.setPassword(e.target.value.trim());
     }
     
     return (

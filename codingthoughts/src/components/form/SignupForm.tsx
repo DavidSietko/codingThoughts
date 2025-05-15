@@ -17,7 +17,7 @@ export default function SignupForm() {
 
     const signupUser = async (e: React.FormEvent) => {
         e.preventDefault();
-        if(!email || !username || !password) {
+        if(!email.trim() || !username.trim() || !password.trim()) {
             setErrorMessage("Make sure all entries are filled in!")
         }
         else {

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 export default function CreateForm() {
     // useStates for all values for an answer
-    const [number, setNumber] = useState<number>();
+    const [number, setNumber] = useState<number | undefined>();
     const [title, setTitle] = useState<string>("");
     const [difficulty, setDifficulty] = useState<string>("");
     const [language, setLanguage] = useState<string>("");
@@ -22,7 +22,7 @@ export default function CreateForm() {
     const router = useRouter();
 
     const createAnswer = async() => {
-        if(!number || !title || !difficulty || !language || !explanation || !code) {
+        if(typeof number === undefined || !title.trim() || !difficulty.trim() || !language.trim() || !explanation.trim() || !code.trim()) {
             setErrorMessage("Make sure all non-optional entries are filled in!");
         }
         else {
@@ -39,13 +39,13 @@ export default function CreateForm() {
                     credentials: "include",
                     body: JSON.stringify({
                         number: number,
-                        title: title,
-                        difficulty: difficulty,
-                        language: language,
-                        description: description,
-                        explanation: explanation,
-                        code: code,
-                        videoLink: link
+                        title: title.trim(),
+                        difficulty: difficulty.trim(),
+                        language: language.trim(),
+                        description: description.trim(),
+                        explanation: explanation.trim(),
+                        code: code.trim(),
+                        videoLink: link.trim()
                     })
                 })
                 // answer created successfully, go back to main page

@@ -17,7 +17,7 @@ export default function LoginForm() {
 
     const loginUser = async (e: React.FormEvent) => {
         e.preventDefault();
-        if(!email || !password) {
+        if(!email.trim() || !password.trim()) {
             setErrorMessage("Make sure all entries are filled in!")
         }
         else {
