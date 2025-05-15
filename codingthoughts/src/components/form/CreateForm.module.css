@@ -1,12 +1,100 @@
 .container {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-evenly;
     align-items: center;
 
     width: 80%;
-    height: 90%;
+    height: 1200px;
 
     gap: 20px;
-    border: 5px solid var(--border-colour);
+    margin-top: 50px;
+    margin-bottom: 50px;
+    border: 10px solid var(--border-colour);
+    border-radius: var(--border-radius);
+    background-color: var(--secondary);
+}
+
+.main {
+    font-size: var(--small-title-size);
+}
+
+.nameContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 120px;
+    gap: 40px;
+}
+
+.valueContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 50%;
+}
+
+.container input {
+    height: 50px;
+    width: 100%;
+    font-size: var(--small-font);
+}
+.container select {
+    height: 50px;
+    width: 100%;
+    font-size: var(--small-font);
+}
+
+.detailsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 20%;
+    font-size: var(--small-font);
+}
+
+.detailsContainer textarea {
+    width: 90%;
+    height: 200px;
+    font-size: var(--mini-font);
+}
+
+.entryContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 400px;
+    height: 80px;
+    font-size: var(--small-font);
+}
+
+.linkContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 800px;
+    height: 80px;
+    font-size: var(--small-font);
+}
+
+.container button {
+    width: 400px;
+    height: 100px;
+    color: var(--secondary);
+    background-color: var(--main);
+    font-size: var(--small-title-size);
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
 }

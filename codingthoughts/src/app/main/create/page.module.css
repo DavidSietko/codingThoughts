@@ -2,9 +2,10 @@
     position: absolute;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     width: var(--width);
     height: var(--height);
     z-index: -1;
     background: var(--background-colour);
+    overflow-x: hidden;
 }
