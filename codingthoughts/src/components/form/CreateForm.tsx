@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./CreateForm.module.css";
+import ErrorMessage from "./ErrorMessage";
 
 export default function CreateForm() {
     // useStates for all values for an answer
@@ -10,9 +11,18 @@ export default function CreateForm() {
     const [description, setDescription] = useState<string>("");
     const [explanation, setExplanation] = useState<string>("");
     const [link, setLink] = useState<string>("");
+    const [errorMessage, setErrorMessage] = useState<string>("");
 
     const difficulties: string[] = ["easy", "medium", "hard"];
 
+    const createAnswer = async() => {
+        if(!number || !title || !difficulty || !language || !explanation) {
+            setErrorMessage("Make sure all non-optional entries are filled in!");
+        }
+        else {
+            
+        }
+    }
 
     return (
         <div className={styles.container}>
@@ -31,9 +41,9 @@ export default function CreateForm() {
                 <div className={styles.valueContainer}>
                     <div className={styles.entryContainer}>
                         <span>Difficulty</span>
-                        <select>
+                        <select onChange={(e) => setDifficulty(e.target.value)}>
                         {difficulties.map((currentDifficulty, index) => (
-                            <option key={index} onClick={() => {setDifficulty(currentDifficulty);}}>{currentDifficulty}</option>
+                            <option key={index}>{currentDifficulty}</option>
                         ))}
                         </select>
                     </div>
@@ -55,7 +65,8 @@ export default function CreateForm() {
                 <span>Video link to solution (optional)</span>
                 <input type="text" value={link} onChange={(e) => setLink(e.target.value)} placeholder="Video Link"></input>
             </div>
-            <button>CREATE</button>
+            <ErrorMessage errorMessage={errorMessage} setErrorMessage={setErrorMessage}/>
+            <button onClick={createAnswer}>CREATE</button>
         </div>
     );
 }
