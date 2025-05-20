@@ -16,7 +16,12 @@ export async function POST(req: Request) {
 
     const where: Prisma.AnswerWhereInput = {
         userId,
-        ...(number && { number }),
+        ...(number && { 
+            number: {
+                contains: number,
+                lte: "insensitive",
+            },
+        }),
         ...(title && {
             title: {
             contains: title,

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 export default function CreateForm() {
     // useStates for all values for an answer
-    const [number, setNumber] = useState<number | undefined>();
+    const [number, setNumber] = useState<string>("");
     const [title, setTitle] = useState<string>("");
     const [difficulty, setDifficulty] = useState<string>("");
     const [language, setLanguage] = useState<string>("");
@@ -22,7 +22,7 @@ export default function CreateForm() {
     const router = useRouter();
 
     const createAnswer = async() => {
-        if(typeof number === undefined || !title.trim() || !difficulty.trim() || !language.trim() || !explanation.trim() || !code.trim()) {
+        if(!number.trim() || !title.trim() || !difficulty.trim() || !language.trim() || !explanation.trim() || !code.trim()) {
             setErrorMessage("Make sure all non-optional entries are filled in!");
         }
         else {
@@ -64,7 +64,7 @@ export default function CreateForm() {
                 <div className={styles.valueContainer}>
                     <div className={styles.entryContainer}>
                         <span>Problem Number</span>
-                        <input type="number" value={number} onChange={(e) => setNumber(e.target.value ? parseInt(e.target.value) : undefined)} placeholder="Problem Number..."></input>
+                        <input type="number" value={number} onChange={(e) => setNumber(e.target.value)} placeholder="Problem Number..."></input>
                     </div>
                     <div className={styles.entryContainer}>
                         <span>Problem Name</span>
@@ -75,6 +75,7 @@ export default function CreateForm() {
                     <div className={styles.entryContainer}>
                         <span>Difficulty</span>
                         <select onChange={(e) => setDifficulty(e.target.value)}>
+                            <option>Select a Difficulty</option>
                         {difficulties.map((currentDifficulty, index) => (
                             <option key={index}>{currentDifficulty}</option>
                         ))}

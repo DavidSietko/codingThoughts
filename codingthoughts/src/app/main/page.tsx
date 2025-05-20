@@ -10,7 +10,7 @@ import { Answer } from "../lib/types/Answer";
 
 export default function Home() {
     // useStates for all values needed
-    const [number, setNumber] = useState<number | undefined>();
+    const [number, setNumber] = useState<string>("");
     const [title, setTitle] = useState<string>("");
     const [difficulty, setDifficulty] = useState<string>("");
     const [language, setLanguage] = useState<string>("");
@@ -33,7 +33,7 @@ export default function Home() {
 
     return(
         <div className={styles.container}>
-            <Filterbox />
+            <Filterbox number={number} title={title} difficulty={difficulty} language={language} setNumber={setNumber} setTitle={setTitle} setDifficulty={setDifficulty} setLanguage={setLanguage}/>
             <AnswerBox number={number} title={title} difficulty={difficulty} language={language} answers={answers} setAnswers={setAnswers} setTitle={setTitle}/>
         </div>
     );

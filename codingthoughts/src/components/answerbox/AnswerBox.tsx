@@ -3,9 +3,10 @@ import styles from "./AnswerBox.module.css";
 import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { title } from "process";
+import { fetchData } from "@/app/lib/answer/answer";
 
 interface Props {
-    number: number | undefined;
+    number: string;
     title: string;
     difficulty: string;
     language: string;
@@ -39,35 +40,17 @@ export default function AnswerBox(props: Props) {
 
     // create a useEffect which will update the answers on screen
     useEffect(() => {
-      const fetchData = async() => {
-        const response = await fetch("/api/answer/get", {
-          method: "POST",
-          credentials: "include",
-          headers: {
-              "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ number: props.number, title: props.title, difficulty: props.difficulty, language: props.language })
-        });
 
-        const data = await response.json();
-
-        if(!response.ok) {
-          throw new Error(data.message);
-        }
-        else {
-          return data;
-        }
-      }
-
-      // create another async function to update answers array
+      // create async function to update answers array
       (async () => {
       try {
-        const data = await fetchData();
+        const data = await fetchData(props.number, props.title, props.difficulty, props.language);
         props.setAnswers(data);
       } catch (error: any) {
         alert(error.message);
       }
       })();
+
     }, [props.number, props.title, props.difficulty, props.language]);
 
 

@@ -4,8 +4,12 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-    const response = await fetch("/api/cookie");
-    const userId = await response.json();
+    // get cookies to see if the user has logged in yet
+    const userCookies = await cookies();
+    const userId = userCookies.get("userId")?.value;
+    if (!userId) {
+        throw new Error("Not logged in yet");
+    }
 
     // Desctruct the request body to create a new answer for the user
     const {number, title, difficulty, language, description, explanation, code, link} = await req.json();
