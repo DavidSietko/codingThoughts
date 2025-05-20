@@ -32,9 +32,33 @@ export default function AnswerBox(props: Props) {
         }
     }
 
-    const deleteAnswer = () => {
-        setIndex(null);
-        setCurrentId(null);
+    const deleteAnswer = async() => {
+        try {
+            if(selectedIndex !== null) {
+                const id: number = props.answers[selectedIndex].id;
+                const response = await fetch("/api/answer/delete", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({id: id})
+                });
+
+                if(!response.ok) {
+                    throw new Error("Looks like you are not logged in. Please log in before continuing.");
+                }
+
+                const data = await response.json();
+
+                console.log(data);
+            }
+            const data = await fetchData(props.number, props.title, props.difficulty, props.language);
+            props.setAnswers(data);
+            setIndex(null);
+            setCurrentId(null);
+        } catch(error: any) {
+            alert(error.message);
+        }
     }
 
     // create a useEffect which will update the answers on screen
@@ -46,7 +70,7 @@ export default function AnswerBox(props: Props) {
         const data = await fetchData(props.number, props.title, props.difficulty, props.language);
         props.setAnswers(data);
       } catch (error: any) {
-        alert(error.message);
+        console.log(error.message);
       }
       })();
 

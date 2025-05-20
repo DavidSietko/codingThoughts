@@ -44,11 +44,12 @@ export async function checkAuth() {
         method: "GET",
         credentials: "include"
     });
-    const data = await response.json();
-
     // If response invalid, re-route user
     if(!response.ok) {
-        throw new Error(data.message || "Authorization failed");
+        throw new Error("Looks like you are not logged in. Please log in before continuing.");
     }
+
+    const data = await response.json();
+
     return data;
 }

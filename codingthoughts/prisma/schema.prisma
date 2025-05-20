@@ -18,7 +18,7 @@ model User {
 model Answer {
   id          Int     @id @default(autoincrement())
   userId      String
-  number      Int
+  number      String
   title       String
   difficulty  String
   language    String
