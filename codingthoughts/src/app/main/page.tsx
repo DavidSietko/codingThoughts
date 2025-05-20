@@ -33,7 +33,7 @@ export default function Home() {
 
     return(
         <div className={styles.container}>
-            <Filterbox number={number} title={title} difficulty={difficulty} language={language} setNumber={setNumber} setTitle={setTitle} setDifficulty={setDifficulty} setLanguage={setLanguage}/>
+            <Filterbox number={number} difficulty={difficulty} language={language} setNumber={setNumber} setDifficulty={setDifficulty} setLanguage={setLanguage} answers={answers}/>
             <AnswerBox number={number} title={title} difficulty={difficulty} language={language} answers={answers} setAnswers={setAnswers} setTitle={setTitle}/>
         </div>
     );

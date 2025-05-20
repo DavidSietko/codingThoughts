@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Answer } from "@/app/lib/types/Answer";
 import styles from "./Filterbox.module.css"
 import DifficultyDropdown from "../dropdown/DifficultyDropdown";
 import { fetchData } from "@/app/lib/answer/answer";
@@ -11,6 +12,7 @@ interface Props {
     setNumber: React.Dispatch<React.SetStateAction<string>>;
     setDifficulty: React.Dispatch<React.SetStateAction<string>>;
     setLanguage: React.Dispatch<React.SetStateAction<string>>;
+    answers: Answer[];
 }
 
 export default function Filterbox(props: Props) {
@@ -36,7 +38,7 @@ export default function Filterbox(props: Props) {
         }
 
         createChart();
-    }, []);
+    }, [props.answers]);
 
     return (
         <div className={styles.container}>
