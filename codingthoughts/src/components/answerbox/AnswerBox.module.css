@@ -85,7 +85,7 @@
 .title {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-evenly;
     align-items: center;
 
     width: 30%;

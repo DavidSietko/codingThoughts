@@ -5,13 +5,13 @@ import { useRouter } from "next/navigation";
 import { title } from "process";
 
 interface Props {
-    number: number | undefined,
-    title: string,
-    difficulty: string,
-    language: string,
-    setTitle: React.Dispatch<React.SetStateAction<string>>,
-    answers: Answer[],
-    setAnswers: React.Dispatch<React.SetStateAction<Answer[]>>
+    number: number | undefined;
+    title: string;
+    difficulty: string;
+    language: string;
+    setTitle: React.Dispatch<React.SetStateAction<string>>;
+    answers: Answer[];
+    setAnswers: React.Dispatch<React.SetStateAction<Answer[]>>;
 }
 
 export default function AnswerBox(props: Props) {

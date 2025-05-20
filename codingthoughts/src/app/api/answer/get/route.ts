@@ -19,25 +19,25 @@ export async function POST(req: Request) {
         ...(number && { number }),
         ...(title && {
             title: {
-            equals: title,
-            mode: 'insensitive',
+            contains: title,
+            lte: 'insensitive',
             },
         }),
         ...(difficulty && {
             difficulty: {
-            equals: difficulty,
-            mode: 'insensitive',
+            contains: difficulty,
+            lte: 'insensitive',
             },
         }),
         ...(language && {
             language: {
-            equals: language,
-            mode: 'insensitive',
+            contains: language,
+            lte: 'insensitive',
             },
         }),
     };
 
     const answers = await prisma.answer.findMany({ where });
 
-    return NextResponse.json({ answers });
+    return NextResponse.json(answers);
 }
