@@ -1,5 +1,4 @@
 import { prisma } from "@/app/lib/prismaClient/prismaClient";
-import { Answer, Prisma } from "@prisma/client";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 

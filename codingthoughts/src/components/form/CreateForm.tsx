@@ -3,6 +3,7 @@ import styles from "./CreateForm.module.css";
 import ErrorMessage from "./ErrorMessage";
 import { checkAuth } from "@/app/lib/auth";
 import { useRouter } from "next/navigation";
+import DifficultyDropdown from "../dropdown/DifficultyDropdown";
 
 export default function CreateForm() {
     // useStates for all values for an answer
@@ -15,8 +16,6 @@ export default function CreateForm() {
     const [code, setCode] = useState<string>("");
     const [link, setLink] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>("");
-
-    const difficulties: string[] = ["easy", "medium", "hard"];
 
     // Create router to route back to create page upon creation of an answer
     const router = useRouter();
@@ -74,12 +73,7 @@ export default function CreateForm() {
                 <div className={styles.valueContainer}>
                     <div className={styles.entryContainer}>
                         <span>Difficulty</span>
-                        <select onChange={(e) => setDifficulty(e.target.value)}>
-                            <option>Select a Difficulty</option>
-                        {difficulties.map((currentDifficulty, index) => (
-                            <option key={index}>{currentDifficulty}</option>
-                        ))}
-                        </select>
+                        <DifficultyDropdown setDifficulty={setDifficulty} />
                     </div>
                     <div className={styles.entryContainer}>
                         <span>Language Used</span>

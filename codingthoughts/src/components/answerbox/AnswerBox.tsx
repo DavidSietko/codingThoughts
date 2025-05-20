@@ -1,8 +1,7 @@
 import { Answer } from "@/app/lib/types/Answer";
 import styles from "./AnswerBox.module.css";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { title } from "process";
 import { fetchData } from "@/app/lib/answer/answer";
 
 interface Props {
