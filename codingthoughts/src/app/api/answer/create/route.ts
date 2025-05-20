@@ -10,7 +10,6 @@ export async function POST(req: Request) {
         throw new Error("Not logged in yet");
     }
 
-    alert("VALID COOKIE");
     // Desctruct the request body to create a new answer for the user
     const {number, title, difficulty, language, description, explanation, code, link} = await req.json();
 
