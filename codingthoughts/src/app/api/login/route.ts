@@ -41,8 +41,8 @@ export async function POST(req: Request) {
 }
 
 export async function GET() {
-    const userCookies = await cookies();
-    const userId = userCookies.get("userId")?.value;
+    const response = await fetch("/api/cookie");
+    const userId = await response.json();
 
     // check if cookie exists
     if(!userId) {
