@@ -10,7 +10,10 @@ import { Answer } from "../lib/types/Answer";
 
 export default function Home() {
     // useStates for all values needed
-    const [name, setName] = useState<string>("");
+    const [number, setNumber] = useState<number | undefined>();
+    const [title, setTitle] = useState<string>("");
+    const [difficulty, setDifficulty] = useState<string>("");
+    const [language, setLanguage] = useState<string>("");
     const [answers, setAnswers] = useState<Answer[]>([]);
 
     // Router to route user back to login page if login check unsuccessful
@@ -31,7 +34,7 @@ export default function Home() {
     return(
         <div className={styles.container}>
             <Filterbox />
-            <AnswerBox name={name} setName={setName}/>
+            <AnswerBox number={number} title={title} difficulty={difficulty} language={language} answers={answers} setAnswers={setAnswers} setTitle={setTitle}/>
         </div>
     );
 }

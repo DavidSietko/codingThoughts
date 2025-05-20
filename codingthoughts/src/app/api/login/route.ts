@@ -41,8 +41,12 @@ export async function POST(req: Request) {
 }
 
 export async function GET() {
-    const response = await fetch("/api/cookie");
-    const userId = await response.json();
+    // get cookies to see if the user has logged in yet
+    const userCookies = await cookies();
+    const userId = userCookies.get("userId")?.value;
+    if (!userId) {
+        throw new Error("Not logged in yet");
+    }
 
     // check if cookie exists
     if(!userId) {

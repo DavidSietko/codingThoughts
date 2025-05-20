@@ -1,18 +1,23 @@
 import { Answer } from "@/app/lib/types/Answer";
 import styles from "./AnswerBox.module.css";
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { title } from "process";
 
 interface Props {
-    name: string,
-    setName: React.Dispatch<React.SetStateAction<string>>,
+    number: number | undefined,
+    title: string,
+    difficulty: string,
+    language: string,
+    setTitle: React.Dispatch<React.SetStateAction<string>>,
+    answers: Answer[],
+    setAnswers: React.Dispatch<React.SetStateAction<Answer[]>>
 }
 
 export default function AnswerBox(props: Props) {
     // useStates for currently pressed answer and the answer id used for deletion
     const [selectedIndex, setIndex] = useState<number | null>(null);
     const [currentId, setCurrentId] = useState<number | null>(null);
-    const [answers, setAnswers] = useState<Answer[]>([]);
 
     // router to change route
     const router = useRouter();
@@ -32,16 +37,49 @@ export default function AnswerBox(props: Props) {
         setCurrentId(null);
     }
 
+    // create a useEffect which will update the answers on screen
+    useEffect(() => {
+      const fetchData = async() => {
+        const response = await fetch("/api/answer/get", {
+          method: "POST",
+          credentials: "include",
+          headers: {
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ number: props.number, title: props.title, difficulty: props.difficulty, language: props.language })
+        });
+
+        const data = await response.json();
+
+        if(!response.ok) {
+          throw new Error(data.message);
+        }
+        else {
+          return data;
+        }
+      }
+
+      // create another async function to update answers array
+      (async () => {
+      try {
+        const data = await fetchData();
+        props.setAnswers(data);
+      } catch (error: any) {
+        alert(error.message);
+      }
+      })();
+    }, [props.number, props.title, props.difficulty, props.language]);
+
 
     return (
         <div className={styles.container}>
             <div className={styles.search}>
-                <input className={styles.searchbar} type="text" value={props.name} onChange={(e) => { props.setName(e.target.value)}} placeholder="Enter a name here..."></input>
+                <input className={styles.searchbar} type="text" value={props.title} onChange={(e) => { props.setTitle(e.target.value)}} placeholder="Enter a name here..."></input>
                 <button onClick={() => {router.push("/main/create")}}>CREATE</button>
                 {currentId && <button onClick={deleteAnswer}>DELETE</button>}
             </div>
             <ul className={styles.listContainer}>
-                {answers.map((answer, index) => (
+                {props.answers.map((answer, index) => (
                     <li key={index} className={`${styles.answerContainer} ${selectedIndex === index ? styles.clicked : ""}`} onClick={() => {setCurrentId(answer.id); setSelectedIndex(index);}}>
                         <div className={styles.title}>
                             <p>{`${answer.number}.`}</p>
