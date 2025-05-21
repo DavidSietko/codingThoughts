@@ -8,3 +8,25 @@
 
     background-color: gray;
 }
+
+.filters {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+    width: 100%;
+    height: auto;
+    flex: 1;
+}
+
+.entry {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 95%;
+    background-color: var(--secondary);
+    border: 2px solid var(--main);
+    border-radius: var(--border-radius);
+}

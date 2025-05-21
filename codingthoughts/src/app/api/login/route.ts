@@ -41,12 +41,16 @@ export async function POST(req: Request) {
 }
 
 export async function GET() {
+    // get cookies to see if the user has logged in yet
     const userCookies = await cookies();
     const userId = userCookies.get("userId")?.value;
+    if (!userId) {
+        throw new Error("Not logged in yet");
+    }
 
     // check if cookie exists
     if(!userId) {
-        return NextResponse.json({ message: "No ID found. User not logged in yet." }, { status: 401 });
+        return NextResponse.json({ message: "Not logged in. Please login before proceeding with this action." }, { status: 401 });
     }
 
     // Check if the userId that was retrieved is a valid ID
@@ -55,7 +59,7 @@ export async function GET() {
     });
 
     if(!user) {
-        return NextResponse.json({ message: "Invalid ID." }, { status: 401 });
+        return NextResponse.json({ message: "Not logged in. Please login before proceeding with this action." }, { status: 401 });
     }
 
     // Else valid id found. User is logged in
