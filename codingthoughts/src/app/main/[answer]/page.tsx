@@ -53,7 +53,6 @@ export default function Home() {
                     setDescription(data.description);
                     setExplanation(data.explanation);
                     setLink(data.videoLink);
-                    alert(data.videoLink);
                 } catch(error: any) {
                     console.log(error.message);
                     setNotFound(true);
