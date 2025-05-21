@@ -5,6 +5,7 @@ import { Answer } from "@/app/lib/types/Answer";
 import { useEffect, useState } from "react";
 import { useSearchParams, useParams } from 'next/navigation';
 import styles from "./page.module.css";
+import { useRouter } from "next/navigation";
 
 
 export default function Home() {
@@ -20,6 +21,8 @@ export default function Home() {
     const [link, setLink] = useState<string>("");
     const [notFound, setNotFound] = useState<boolean>(false);
     const [changed, setChanged] = useState<boolean>(false);
+
+    const router = useRouter();
 
     // get the id of answer from the search params
     const searchParams = useSearchParams();
@@ -75,7 +78,6 @@ export default function Home() {
                     <header>{`${number}.  ${title}`}</header>
                     <div className={styles.link}>
                         <p>Video Solution:</p>
-                        <a href={link}>{link}</a>
                     </div>
                 </div>
                 <div className={styles.text}>

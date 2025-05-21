@@ -1,3 +1,5 @@
+"use-client";
+
 import { Answer } from "@/app/lib/types/Answer";
 import styles from "./AnswerBox.module.css";
 import { useEffect, useState } from "react";
