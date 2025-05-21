@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     }
 
     // Desctruct the request body to create a new answer for the user
-    const {number, title, difficulty, language, description, explanation, code, link} = await req.json();
+    const {number, title, difficulty, language, description, explanation, code, videoLink} = await req.json();
 
     // create the answer
     await prisma.answer.create({
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
             description: description,
             explanation: explanation,
             code: code,
-            videoLink: link
+            videoLink: videoLink,
         }
     });
 

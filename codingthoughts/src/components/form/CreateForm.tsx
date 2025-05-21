@@ -44,9 +44,9 @@ export default function CreateForm() {
                         description: description.trim(),
                         explanation: explanation.trim(),
                         code: code.trim(),
-                        videoLink: link.trim()
+                        videoLink: link.trim(),
                     })
-                })
+                });
                 // answer created successfully, go back to main page
                 router.push("/main");
 

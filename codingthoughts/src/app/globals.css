@@ -45,6 +45,7 @@ input:hover {
 
   --small-font: clamp(1rem, 2vw, 1.6rem);
   --mini-font: clamp(0.8rem, 2vw, 1rem);
+  --answer-font: clamp(1rem, 2vw, 1.4rem);
 
   --background-colour: linear-gradient(to bottom, var(--main), var(--secondary));
   --navbar-background: linear-gradient(to left, var(--main), var(--secondary));

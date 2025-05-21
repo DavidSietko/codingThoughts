@@ -1,0 +1,72 @@
+.container {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: var(--width);
+    height: var(--height);
+    z-index: -1;
+}
+
+.link {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 90%;
+    gap: 5px;
+    font-size: var(--answer-font);
+}
+
+.infoContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: clamp(600px, 45%, 1400px);
+    height: 100%;
+    overflow-y: auto;
+    background-color: var(--border-colour);
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 20%;
+    font-size: var(--small-title-size);
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    gap: 100px;
+    margin-bottom: 100px;
+    flex: 1;
+}
+
+.textEntry {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    font-size: var(--answer-font);
+}
+
+.text textarea {
+    width: 95%;
+    height: 500px;
+    border: none;
+    font-size: var(--answer-font);
+}
