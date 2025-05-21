@@ -95,7 +95,11 @@ export default function AnswerBox(props: Props) {
                             <p>{`Difficulty: ${answer.difficulty}`}</p>
                             <p>{`Language: ${answer.language}`}</p>
                         </div>
-                        <button>GO</button>
+                        <button onClick={() => {
+                            router.push(`/main/${answer.title}?id=${answer.id}`);
+                            setIndex(null);
+                            setCurrentId(null);
+                        }}>GO</button>
                     </li>
                 ))}
             </ul>
