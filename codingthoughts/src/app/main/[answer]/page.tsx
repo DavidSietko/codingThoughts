@@ -78,6 +78,7 @@ export default function Home() {
                     <header>{`${number}.  ${title}`}</header>
                     <div className={styles.link}>
                         <p>Video Solution:</p>
+                        <a href={link}>{link}</a>
                     </div>
                 </div>
                 <div className={styles.text}>
