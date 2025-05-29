@@ -1,0 +1,8 @@
+.container {
+    z-index: -1;
+    display: flex;
+
+    width: 50vw;
+    height: 90vh;
+    border: 5px solid black;
+}

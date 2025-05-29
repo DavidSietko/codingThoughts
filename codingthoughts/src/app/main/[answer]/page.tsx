@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams, useParams } from 'next/navigation';
 import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
+import CodeWindow from "@/components/CodeWindow/CodeWindow";
 
 
 export default function Home() {
@@ -67,6 +68,10 @@ export default function Home() {
     const changeValue = (value: string, setValue: React.Dispatch<React.SetStateAction<string>>) => {
         setValue(value);
         setChanged(true);
+
+        if(!changed) {
+            setChanged(true);
+        }
     }
 
     if(notFound) return <div>404 PAGE NOT FOUND</div>;
@@ -79,6 +84,7 @@ export default function Home() {
                     <div className={styles.link}>
                         <p>Video Solution:</p>
                         <a href={link}>{link}</a>
+                        <button>Add Video</button>
                     </div>
                 </div>
                 <div className={styles.text}>
@@ -91,7 +97,9 @@ export default function Home() {
                         <textarea value={explanation} onChange={(e) => changeValue(e.target.value, setExplanation)}></textarea>
                     </div>
                 </div>
+                <button>SAVE</button>
             </div>
+            <CodeWindow code={code} setCode={setCode} />
         </div>
     );
 }

@@ -2,7 +2,7 @@ import { prisma } from "@/app/lib/prismaClient/prismaClient";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request,{ params }: { params: { answer: string } }) {
+export async function GET(req: Request, { params }: { params: { answer: string } }) {
     // get cookies to see if the user has logged in yet
     const userCookies = await cookies();
     const userId = userCookies.get("userId")?.value;
