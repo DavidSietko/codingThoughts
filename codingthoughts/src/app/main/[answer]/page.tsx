@@ -56,6 +56,7 @@ export default function Home() {
                     setLanguage(data.language);
                     setDescription(data.description);
                     setExplanation(data.explanation);
+                    setCode(data.code);
                     setLink(data.videoLink);
                 } catch(error: any) {
                     console.log(error.message);
@@ -99,7 +100,7 @@ export default function Home() {
                 </div>
                 <button>SAVE</button>
             </div>
-            <CodeWindow code={code} setCode={setCode} />
+            <CodeWindow language={language} setLanguage={setLanguage} code={code} setCode={setCode} />
         </div>
     );
 }
