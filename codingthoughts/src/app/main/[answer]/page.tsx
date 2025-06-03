@@ -22,6 +22,8 @@ export default function Home() {
     const [link, setLink] = useState<string>("");
     const [notFound, setNotFound] = useState<boolean>(false);
     const [changed, setChanged] = useState<boolean>(false);
+    const [updated, setUpdated] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>("");
 
     const router = useRouter();
 
@@ -29,7 +31,7 @@ export default function Home() {
     const searchParams = useSearchParams();
     const id = searchParams.get('id');
 
-    // get anser from params
+    // get answer from params
     const params = useParams();
 
     useEffect(() => {
@@ -58,6 +60,7 @@ export default function Home() {
                     setExplanation(data.explanation);
                     setCode(data.code);
                     setLink(data.videoLink);
+                    setUpdated(false);
                 } catch(error: any) {
                     console.log(error.message);
                     setNotFound(true);
@@ -72,6 +75,41 @@ export default function Home() {
 
         if(!changed) {
             setChanged(true);
+        }
+    }
+
+    useEffect(() => {
+        setUpdated(true);
+    }, [number, title, language, difficulty, description, explanation, code, link]);
+
+    const saveAnswer = async() => {
+        await checkAuth();
+        try {
+            const response = await fetch(`/api/answer/update?id=${id}`, {
+                method: "POST",
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    number: number,
+                    title: title,
+                    difficulty: difficulty,
+                    language: language,
+                    description: description,
+                    explanation: explanation,
+                    code: code,
+                    videoLink: link
+                })
+            });
+            const data = await response.json();
+
+            if(!response.ok) {
+                throw new Error(data.message);
+            }
+            router.push("/main");
+        } catch(error: any) {
+            setErrorMessage(error.message);
         }
     }
 
@@ -98,7 +136,12 @@ export default function Home() {
                         <textarea value={explanation} onChange={(e) => changeValue(e.target.value, setExplanation)}></textarea>
                     </div>
                 </div>
-                <button className={styles.saveButton}>SAVE</button>
+                {updated && 
+                    <div className={styles.buttonContainer}>
+                        <button className={styles.saveButton} onClick={saveAnswer}>SAVE</button>
+                        <span>{errorMessage}</span>
+                    </div>
+                }
             </div>
             <CodeWindow language={language} setLanguage={setLanguage} code={code} setCode={setCode} />
         </div>
