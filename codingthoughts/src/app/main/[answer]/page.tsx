@@ -98,7 +98,7 @@ export default function Home() {
                         <textarea value={explanation} onChange={(e) => changeValue(e.target.value, setExplanation)}></textarea>
                     </div>
                 </div>
-                <button>SAVE</button>
+                <button className={styles.saveButton}>SAVE</button>
             </div>
             <CodeWindow language={language} setLanguage={setLanguage} code={code} setCode={setCode} />
         </div>
