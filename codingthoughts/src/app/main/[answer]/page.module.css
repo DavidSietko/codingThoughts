@@ -24,7 +24,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    width: clamp(600px, 45%, 1400px);
+    width: var(--infoContainer-width);
     height: 100%;
     overflow-y: auto;
     background-color: var(--border-colour);

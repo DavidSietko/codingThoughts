@@ -4,7 +4,7 @@
     justify-content: space-evenly;
     align-items: center;
 
-    width: calc(auto - 20px);
+    width: calc(100% - var(--infoContainer-width));
     height: 100%;
     flex: 1;
 }
