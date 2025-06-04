@@ -83,7 +83,7 @@ export default function CreateForm() {
                     </div>
                     <div className={styles.entryContainer}>
                         <span>Language Used</span>
-                        <LanguageDropdown language={language} setLanguage={setLanguage} setIsInitializing={() => {}} />
+                        <LanguageDropdown language={language} setLanguage={setLanguage} checkLabel={true}/>
                     </div>
                 </div>
             </div>

@@ -4,6 +4,7 @@ import styles from "./Filterbox.module.css"
 import DifficultyDropdown from "../dropdown/DifficultyDropdown";
 import { fetchData } from "@/app/lib/answer/answer";
 import PieChart from "../PieChart/PieChart";
+import LanguageDropdown from "../dropdown/LanguageDropdown";
 
 interface Props {
     number: string;
@@ -25,8 +26,6 @@ export default function Filterbox(props: Props) {
         const createChart = async() => {
             try {
                 const data = await fetchData("", "", "", "");
-                console.log("Logging Data...");
-                console.log(data);
                 setTotal(data.length);
                 const easyCount: number = data.filter((answer: { difficulty: string }) => answer.difficulty === "Easy").length;
                 const mediumCount: number = data.filter((answer: { difficulty: string }) => answer.difficulty === "Medium").length;
@@ -49,7 +48,7 @@ export default function Filterbox(props: Props) {
                 </div>
                 <div className={styles.entry}>
                     <p>Language:</p>
-                    <input type="text" value={props.language} onChange={(e) => props.setLanguage(e.target.value)} placeholder="Language used"></input>
+                    <LanguageDropdown language={props.language} setLanguage={props.setLanguage} checkLabel={true}/>
                 </div>
                 <div className={styles.entry}>
                     <p>Difficulty:</p>

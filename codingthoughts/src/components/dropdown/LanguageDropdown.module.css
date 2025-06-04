@@ -1,6 +1,6 @@
 .container {
     width: 40%;
-    height: 90%;
+    height: 80%;
     border: 2px solid black;
     text-align: center;
     border-radius: var(--border-radius);

@@ -31,7 +31,7 @@ export default function CodeWindow(props: Props) {
     return (
         <div className={styles.container}>
             <div className={styles.buttons}>
-                <LanguageDropdown setIsInitializing={props.setIsInitializing} language={props.language} setLanguage={props.setLanguage}/>
+                <LanguageDropdown language={props.language} setLanguage={props.setLanguage} checkLabel={false}/>
                 <select className={dropdownStyles.container} onChange={(e) => setCurrentTheme(e.target.value)}>
                     {themes.map((theme) => (
                         <option key={theme.value} value={theme.value}>{theme.label}</option>
