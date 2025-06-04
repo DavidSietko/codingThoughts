@@ -65,17 +65,21 @@ export default function AnswerBox(props: Props) {
 
     // create a useEffect which will update the answers on screen
     useEffect(() => {
+        const debounce = setTimeout(() => {
+            // create async function to update answers array
+            (async () => {
+                try {
+                    const data = await fetchData(props.number, props.title, props.difficulty, props.language);
+                    props.setAnswers(data);
+                } catch (error: any) {
+                    console.log(error.message);
+                }
+            })();
+        }, 300);
 
-      // create async function to update answers array
-      (async () => {
-      try {
-        const data = await fetchData(props.number, props.title, props.difficulty, props.language);
-        props.setAnswers(data);
-      } catch (error: any) {
-        console.log(error.message);
-      }
-      })();
-
+        return () => {
+            clearTimeout(debounce);
+        }
     }, [props.number, props.title, props.difficulty, props.language]);
 
 
