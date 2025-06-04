@@ -89,8 +89,8 @@ export default function Home() {
     }, [number, title, language, difficulty, description, explanation, code, link]);
 
     const saveAnswer = async() => {
-        await checkAuth();
         try {
+            await checkAuth();
             const response = await fetch(`/api/answer/update?id=${id}`, {
                 method: "POST",
                 credentials: 'include',
@@ -111,6 +111,7 @@ export default function Home() {
             const data = await response.json();
 
             if(!response.ok) {
+                alert("Problemo");
                 throw new Error(data.message);
             }
             router.push("/main");
@@ -177,7 +178,7 @@ export default function Home() {
                 {updated && 
                     <div className={styles.buttonContainer}>
                         <button className={styles.saveButton} onClick={saveAnswer}>SAVE</button>
-                        <span>{errorMessage}</span>
+                        <ErrorMessage errorMessage={errorMessage} setErrorMessage={setErrorMessage} />
                     </div>
                 }
             </div>
