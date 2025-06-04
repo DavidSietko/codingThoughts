@@ -1,0 +1,12 @@
+.container {
+    width: 40%;
+    height: 80%;
+    border: 2px solid black;
+    text-align: center;
+    border-radius: var(--border-radius);
+    font-size: var(--mini-font);
+}
+
+.container:focus {
+    border: 4px solid blue;
+}

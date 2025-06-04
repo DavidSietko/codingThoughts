@@ -1,3 +1,5 @@
+"use-client";
+
 import { Answer } from "@/app/lib/types/Answer";
 import styles from "./AnswerBox.module.css";
 import { useEffect, useState } from "react";
@@ -63,17 +65,21 @@ export default function AnswerBox(props: Props) {
 
     // create a useEffect which will update the answers on screen
     useEffect(() => {
+        const debounce = setTimeout(() => {
+            // create async function to update answers array
+            (async () => {
+                try {
+                    const data = await fetchData(props.number, props.title, props.difficulty, props.language);
+                    props.setAnswers(data);
+                } catch (error: any) {
+                    console.log(error.message);
+                }
+            })();
+        }, 300);
 
-      // create async function to update answers array
-      (async () => {
-      try {
-        const data = await fetchData(props.number, props.title, props.difficulty, props.language);
-        props.setAnswers(data);
-      } catch (error: any) {
-        console.log(error.message);
-      }
-      })();
-
+        return () => {
+            clearTimeout(debounce);
+        }
     }, [props.number, props.title, props.difficulty, props.language]);
 
 
@@ -95,7 +101,11 @@ export default function AnswerBox(props: Props) {
                             <p>{`Difficulty: ${answer.difficulty}`}</p>
                             <p>{`Language: ${answer.language}`}</p>
                         </div>
-                        <button>GO</button>
+                        <button onClick={() => {
+                            router.push(`/main/${answer.title}?id=${answer.id}`);
+                            setIndex(null);
+                            setCurrentId(null);
+                        }}>GO</button>
                     </li>
                 ))}
             </ul>

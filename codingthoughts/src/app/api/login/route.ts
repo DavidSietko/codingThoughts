@@ -54,7 +54,7 @@ export async function GET() {
     }
 
     // Check if the userId that was retrieved is a valid ID
-    const user = prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
         where: { id: userId }
     });
 

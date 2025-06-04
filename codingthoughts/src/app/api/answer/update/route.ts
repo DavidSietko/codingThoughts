@@ -10,24 +10,34 @@ export async function POST(req: Request) {
         throw new Error("Not logged in yet");
     }
 
-    // Desctruct the request body to create a new answer for the user
+    // get id of answer to update it
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get('id');
+
+    if(!id) {
+        return NextResponse.json({message: "No answer id found"}, { status: 400 });
+    }
+
+    // get rest of answer attributes
     const {number, title, difficulty, language, description, explanation, code, videoLink} = await req.json();
 
-    // create the answer
-    await prisma.answer.create({
-        data: {
-            userId: userId,
-            number: number,
+    // update the answer
+    await prisma.answer.update({
+        where: {
+            id: parseInt(id),
+            userId: userId
+        },
+        data : {
             title: title,
+            number: number,
             difficulty: difficulty,
             language: language,
             description: description,
             explanation: explanation,
             code: code,
-            videoLink: videoLink,
+            videoLink: videoLink
         }
     });
 
-    // return successful response
-    return NextResponse.json({ message: "Answer created successfully" });
+    return NextResponse.json({ message: "Update successful"});
 }

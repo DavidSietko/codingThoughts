@@ -4,6 +4,8 @@ import ErrorMessage from "./ErrorMessage";
 import { checkAuth } from "@/app/lib/auth";
 import { useRouter } from "next/navigation";
 import DifficultyDropdown from "../dropdown/DifficultyDropdown";
+import isValidUrl from "@/app/lib/link/videoLink";
+import LanguageDropdown from "../dropdown/LanguageDropdown";
 
 export default function CreateForm() {
     // useStates for all values for an answer
@@ -25,6 +27,10 @@ export default function CreateForm() {
             setErrorMessage("Make sure all non-optional entries are filled in!");
         }
         else {
+            if(link.trim() && !isValidUrl(link)) {
+                setErrorMessage("Invalid video link. Check link again and make sure link starts with https or http.")
+                return;
+            }
             try {
                 // check if user logged in
                 await checkAuth();
@@ -44,9 +50,9 @@ export default function CreateForm() {
                         description: description.trim(),
                         explanation: explanation.trim(),
                         code: code.trim(),
-                        videoLink: link.trim()
+                        videoLink: link.trim(),
                     })
-                })
+                });
                 // answer created successfully, go back to main page
                 router.push("/main");
 
@@ -77,7 +83,7 @@ export default function CreateForm() {
                     </div>
                     <div className={styles.entryContainer}>
                         <span>Language Used</span>
-                        <input type="text" value={language} placeholder="Enter language used here" onChange={(e) => {setLanguage(e.target.value);}}></input>
+                        <LanguageDropdown language={language} setLanguage={setLanguage} checkLabel={true}/>
                     </div>
                 </div>
             </div>
