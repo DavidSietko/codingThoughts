@@ -8,6 +8,7 @@ import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
 import CodeWindow from "@/components/CodeWindow/CodeWindow";
 import ErrorMessage from "@/components/form/ErrorMessage";
+import isValidUrl from "@/app/lib/link/videoLink";
 
 
 export default function Home() {
@@ -122,14 +123,6 @@ export default function Home() {
 
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [linkErrorMessage, setLinkErrorMessage] = useState<string>("");
-    function isValidUrl(url: string): boolean {
-        try {
-            const parsed = new URL(url);
-            return parsed.protocol == 'http:' || parsed.protocol == 'https:';
-        } catch {
-            return false;
-        }
-    }
 
     const saveLink = () => {
         if(!isEditing) {
