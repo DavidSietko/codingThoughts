@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./LanguageDropdown.module.css";
 
 export const languageOptions = [
@@ -13,13 +13,24 @@ export const languageOptions = [
 ];
 
 interface Props {
+    language: string;
     setLanguage: React.Dispatch<React.SetStateAction<string>>;
+    setIsInitializing: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function LanguageDropdown(props: Props) {
 
+    useEffect(() => {
+        for(let l of languageOptions) {
+            if(l.label.toLocaleLowerCase() === props.language.toLocaleLowerCase()) {
+                props.setIsInitializing(true);
+                props.setLanguage(l.value);
+            }
+        }
+    }, [props.language]);
+
     return (
-        <select className={styles.container} onChange={(e) => props.setLanguage(e.target.value)}>
+        <select className={styles.container} value={props.language} onChange={(e) => props.setLanguage(e.target.value)}>
             {languageOptions.map((language) => (
                  <option key={language.value} value={language.value}>{language.label}</option>
             ))}

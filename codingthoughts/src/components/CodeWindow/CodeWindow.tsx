@@ -16,6 +16,7 @@ interface Props {
     setLanguage: React.Dispatch<React.SetStateAction<string>>;
     code: string;
     setCode: React.Dispatch<React.SetStateAction<string>>;
+    setIsInitializing: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function CodeWindow(props: Props) {
@@ -30,7 +31,7 @@ export default function CodeWindow(props: Props) {
     return (
         <div className={styles.container}>
             <div className={styles.buttons}>
-                <LanguageDropdown setLanguage={props.setLanguage}/>
+                <LanguageDropdown setIsInitializing={props.setIsInitializing} language={props.language} setLanguage={props.setLanguage}/>
                 <select className={dropdownStyles.container} onChange={(e) => setCurrentTheme(e.target.value)}>
                     {themes.map((theme) => (
                         <option key={theme.value} value={theme.value}>{theme.label}</option>

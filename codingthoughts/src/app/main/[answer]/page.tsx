@@ -7,6 +7,7 @@ import { useSearchParams, useParams } from 'next/navigation';
 import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
 import CodeWindow from "@/components/CodeWindow/CodeWindow";
+import ErrorMessage from "@/components/form/ErrorMessage";
 
 
 export default function Home() {
@@ -24,6 +25,7 @@ export default function Home() {
     const [changed, setChanged] = useState<boolean>(false);
     const [updated, setUpdated] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
+    const [isInitializing, setIsInitializing] = useState<boolean>(true);
 
     const router = useRouter();
 
@@ -59,8 +61,10 @@ export default function Home() {
                     setDescription(data.description);
                     setExplanation(data.explanation);
                     setCode(data.code);
-                    setLink(data.videoLink);
-                    setUpdated(false);
+                    setLink(data.videoLink !== null ? data.videoLink : "");
+                    setTimeout(() => {
+                        setIsInitializing(false);
+                    }, 2000);
                 } catch(error: any) {
                     console.log(error.message);
                     setNotFound(true);
@@ -79,7 +83,9 @@ export default function Home() {
     }
 
     useEffect(() => {
-        setUpdated(true);
+        if(!isInitializing) {
+            setUpdated(true);
+        }
     }, [number, title, language, difficulty, description, explanation, code, link]);
 
     const saveAnswer = async() => {
@@ -113,17 +119,49 @@ export default function Home() {
         }
     }
 
+    const [isEditing, setIsEditing] = useState<boolean>(false);
+    const [linkErrorMessage, setLinkErrorMessage] = useState<string>("");
+    function isValidUrl(url: string): boolean {
+        try {
+            const parsed = new URL(url);
+            return parsed.protocol == 'http:' || parsed.protocol == 'https:';
+        } catch {
+            return false;
+        }
+    }
+
+    const saveLink = () => {
+        if(!isEditing) {
+            setIsEditing(true);
+        }
+        else {
+            if(isValidUrl(link)) {
+                setIsEditing(false);
+            }
+            else {
+                setLinkErrorMessage("Invalid Link. Please provide valink link starting with https://");
+            }
+        }
+
+    }
+
     if(notFound) return <div>404 PAGE NOT FOUND</div>;
 
+    <a href={link}>{link}</a>
     return (
         <div className={styles.container}>
             <div className={styles.infoContainer}>
                 <div className={styles.title}>
                     <header>{`${number}.  ${title}`}</header>
-                    <div className={styles.link}>
-                        <p>Video Solution:</p>
-                        <a href={link}>{link}</a>
-                        <button>Add Video</button>
+                    <div className={styles.linkContainer}>
+                        <div className={styles.link}>
+                            <p>Video Solution:</p>
+                            {isEditing ? <input type="text" value={link} onChange={(e) => setLink(e.target.value)}></input> 
+                            : <a href={link}>{link}</a>}
+                            <button onClick={saveLink}>{isEditing ? "Save" : "Edit Link"}</button>
+                            {isEditing && <button onClick={() => setIsEditing(false)}>Cancel</button>}
+                        </div>
+                        <ErrorMessage errorMessage={linkErrorMessage} setErrorMessage={setLinkErrorMessage} />
                     </div>
                 </div>
                 <div className={styles.text}>
@@ -143,7 +181,7 @@ export default function Home() {
                     </div>
                 }
             </div>
-            <CodeWindow language={language} setLanguage={setLanguage} code={code} setCode={setCode} />
+            <CodeWindow language={language} setLanguage={setLanguage} code={code} setCode={setCode} setIsInitializing={setIsInitializing} />
         </div>
     );
 }
