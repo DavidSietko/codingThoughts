@@ -14,7 +14,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 90%;
+    width: 97%;
     height: 100px;
 }
 
@@ -27,6 +27,19 @@
     gap: 5px;
     margin-top: 10px;
     font-size: var(--mini-font);
+}
+
+.linkButton {
+    height: 30px;
+    width: 100px;
+    background-color: var(--main);
+    color: var(--secondary);
+    border: none;
+    border-radius: var(--border-radius);
+}
+
+.linkInput {
+    width: 500px;
 }
 
 .infoContainer {

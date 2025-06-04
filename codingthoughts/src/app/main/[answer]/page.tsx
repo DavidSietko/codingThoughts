@@ -156,10 +156,10 @@ export default function Home() {
                     <div className={styles.linkContainer}>
                         <div className={styles.link}>
                             <p>Video Solution:</p>
-                            {isEditing ? <input type="text" value={link} onChange={(e) => setLink(e.target.value)}></input> 
+                            {isEditing ? <input className={styles.linkInput} type="text" value={link} onChange={(e) => setLink(e.target.value)}></input> 
                             : <a href={link}>{link}</a>}
-                            <button onClick={saveLink}>{isEditing ? "Save" : "Edit Link"}</button>
-                            {isEditing && <button onClick={() => setIsEditing(false)}>Cancel</button>}
+                            <button className={styles.linkButton} onClick={saveLink}>{isEditing ? "Save" : "Edit Link"}</button>
+                            {isEditing && <button className={styles.linkButton} onClick={() => setIsEditing(false)}>Cancel</button>}
                         </div>
                         <ErrorMessage errorMessage={linkErrorMessage} setErrorMessage={setLinkErrorMessage} />
                     </div>
