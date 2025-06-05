@@ -1,0 +1,63 @@
+import { VerifyEmail } from "@/components/email/VerifyEmail";
+import { Resend } from 'resend';
+import { NextResponse } from 'next/server';
+import { prisma } from '../../../lib/prismaClient/prismaClient';
+import { cookies } from 'next/headers';
+import { ReactElement } from "react";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+export async function POST(req: Request) {
+    // get cookies to see if the user has logged in yet
+    const userCookies = await cookies();
+    const userId = userCookies.get("userId")?.value;
+    if (!userId) {
+        throw new Error("Not logged in yet");
+    }
+
+    // get the new email
+    const {newEmail} = await req.json();
+
+    // check if valid
+    if(!newEmail) {
+        return NextResponse.json({ message: "Invalid Email Provided."},  { status: 400 });
+    }
+
+    // create a token for this email to validate it
+    const token = await prisma.token.create({
+        data: {
+            userId: userId,
+            value: newEmail,
+            type: "EMAIL_CHANGE",
+            expiresAt: new Date(Date.now() + 3600 * 1000),
+        },
+        include: {
+            user: true
+        }
+    });
+
+    // check if token created successfully
+    if(!token) {
+        return NextResponse.json({ message: "There was an error creating the token"}, { status: 500 });
+    }
+
+    // construct the url to verify the email
+    const verifyUrl = `${process.env.BASE_URL}/verify-email?token=${token.id}`;
+
+    try {
+        const { data, error } = await resend.emails.send({
+            from: 'mypuzzle11@gmail.com',
+            to: [newEmail],
+            subject: 'Email Change',
+            react: VerifyEmail({ username: token.user.username, verifyUrl: verifyUrl}) as ReactElement,
+        });
+
+        if (error) {
+            return NextResponse.json({ error }, { status: 500 });
+        }
+
+        return NextResponse.json(data);
+    } catch (error) {
+        return NextResponse.json({ error }, { status: 500 });
+    }
+}
