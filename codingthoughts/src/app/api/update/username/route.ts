@@ -10,7 +10,21 @@ export async function POST(req: Request) {
         throw new Error("Not logged in yet");
     }
 
-    const username: string = await req.json();
+    console.log("getting request lallala");
+    const {username} = await req.json();
+
+    // Check if username is unique
+    const existingUsername = await prisma.user.findUnique({
+        where: {username: username}
+    });
+
+    if(existingUsername && existingUsername.id === userId) {
+        return NextResponse.json({ message: "Same username" });
+    }
+
+    if(existingUsername) {
+        return NextResponse.json({ message: "This username is already taken. Please choose a different username" }, { status: 400 });
+    }
 
     // check if username provided
     if(!username) {

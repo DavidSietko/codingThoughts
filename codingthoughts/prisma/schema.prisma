@@ -13,6 +13,7 @@ model User {
   email    String   @unique
   password String
   answers  Answer[]
+  tokens   Token[]
 }
 
 model Answer {
@@ -27,4 +28,21 @@ model Answer {
   code        String
   videoLink   String?
   user        User    @relation(fields: [userId], references: [id])
+}
+
+model Token {
+  id         String     @id @default(uuid())
+  userId     String
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type       TokenType
+  value      String      // Holds either new email or new password hash
+  expiresAt  DateTime
+  createdAt  DateTime    @default(now())
+
+  @@index([userId, type])
+}
+
+enum TokenType {
+  EMAIL_CHANGE
+  PASSWORD_RESET
 }

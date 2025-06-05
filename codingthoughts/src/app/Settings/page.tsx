@@ -3,13 +3,16 @@
 import InfoEntry from "@/components/InfoEntry/InfoEntry";
 import { useEffect, useState } from "react";
 import { checkAuth } from "../lib/auth";
+import ErrorMessage from "@/components/form/ErrorMessage";
 
 export default function Home() {
     // boolean to see if user logged in or not
-    const [loggedIn, setLoggedIn] = useState<boolean>(false);
+    const [loggedIn, setLoggedIn] = useState<boolean>(true);
 
     const [username, setUsername] = useState<string>("");
     const [email, setEmail] = useState<string>("");
+    const [usernameErrorMessage, setUsernameErrorMessage] = useState<string>("");
+    const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
 
     useEffect(() => {
         const handler = async() => {
@@ -40,6 +43,36 @@ export default function Home() {
         handler();
     }, []);
 
+    const updateUsername = async(): Promise<boolean> => {
+        try {
+            // get response from changing username
+            const response = await fetch("/api/update/username", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: username
+                })
+            });
+            // get the data
+            const data = await response.json();
+            // check if ok
+            if(!response.ok) {
+                throw new Error(data.message);
+            }
+            return true;
+        } catch(error: any) {
+            setUsernameErrorMessage(error.message);
+            return false;
+        }
+    }
+
+    const updateEmail = async(): Promise<boolean> => {
+        return true;
+    }
+
     if(!loggedIn) {
         return (
             <div>
@@ -51,8 +84,14 @@ export default function Home() {
         return (
             <div>
                 <div>
-                    <InfoEntry entry="Username" value={username} setValue={setUsername} updateValue={() => {}}/>
-                    <InfoEntry entry="Email" value={email} setValue={setEmail} updateValue={() => {}} />
+                    <div className="entryContainer">
+                        <InfoEntry entry="Username" value={username} setValue={setUsername} updateValue={updateUsername}/>
+                        <ErrorMessage errorMessage={usernameErrorMessage} setErrorMessage={setUsernameErrorMessage} />
+                    </div>
+                    <div>
+                        <InfoEntry entry="Email" value={email} setValue={setEmail} updateValue={updateEmail} />
+                        <ErrorMessage errorMessage={emailErrorMessage} setErrorMessage={setEmailErrorMessage} />
+                    </div>
                 </div>
                 <div>
                     <button>LOGOUT</button>
