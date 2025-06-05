@@ -16,25 +16,49 @@ export default function Home() {
             // see if user logged in and then fetch the username and email from the backend
             try {
                 await checkAuth();
+                // get response from backend for fetching username and email
+                const response = await fetch("/api/update", {
+                    method: "GET",
+                    credentials: "include"
+                });
+                // await data
+                const data = await response.json();
+
+                // check if response was ok
+                if(!response.ok) {
+                    throw new Error(data.message);
+                }
+                // set data and indicate that user logged in
+                setUsername(data.username);
+                setEmail(data.email);
                 setLoggedIn(true);
             } catch(error: any) {
-                console.log("User not logged in.");
+                console.log(error.message);
                 setLoggedIn(false);
             }
         };
         handler();
     }, []);
 
-    return (
-        <div>
+    if(!loggedIn) {
+        return (
             <div>
-                <InfoEntry entry="Username" value={username} setValue={setUsername} updateValue={() => {}}/>
-                <InfoEntry entry="Email" value={email} setValue={setEmail} updateValue={() => {}} />
+                <span>Error. Please log in before continuing</span>
             </div>
+        );
+    }
+    else {
+        return (
             <div>
-                <button>LOGOUT</button>
-                <button>DELETE ACCOUNT</button>
+                <div>
+                    <InfoEntry entry="Username" value={username} setValue={setUsername} updateValue={() => {}}/>
+                    <InfoEntry entry="Email" value={email} setValue={setEmail} updateValue={() => {}} />
+                </div>
+                <div>
+                    <button>LOGOUT</button>
+                    <button>DELETE ACCOUNT</button>
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
