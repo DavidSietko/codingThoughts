@@ -70,6 +70,20 @@ export default function Home() {
     }
 
     const updateEmail = async(): Promise<boolean> => {
+        try {
+            const response = await fetch("/api/update/email", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: email
+                })
+            });
+        } catch(error: any) {
+
+        }
         return true;
     }
 
