@@ -16,7 +16,8 @@ export async function POST(req: Request) {
     }
 
     // get the new email
-    const {newEmail} = await req.json();
+    const data = await req.json();
+    const newEmail: string = data.email;
 
     // check if valid
     if(!newEmail) {
@@ -46,18 +47,20 @@ export async function POST(req: Request) {
 
     try {
         const { data, error } = await resend.emails.send({
-            from: 'mypuzzle11@gmail.com',
+            from: 'mypuzzle12@smtp.greenweb.ie',
             to: [newEmail],
             subject: 'Email Change',
             react: VerifyEmail({ username: token.user.username, verifyUrl: verifyUrl}) as ReactElement,
         });
 
         if (error) {
+            console.log(error);
             return NextResponse.json({ error }, { status: 500 });
         }
 
         return NextResponse.json(data);
-    } catch (error) {
-        return NextResponse.json({ error }, { status: 500 });
+    } catch (error: any) {
+        console.log(error);
+        return NextResponse.json({ mesasge: error.message }, { status: 500 });
     }
 }
