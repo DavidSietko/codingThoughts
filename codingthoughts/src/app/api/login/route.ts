@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '../../lib/prismaClient/prismaClient';
 import bcrypt from 'bcryptjs';
 import { cookies } from 'next/headers';
+import { SignJWT } from 'jose';
 
 export async function POST(req: Request) {
     const {email, password } = await req.json();
@@ -32,11 +33,17 @@ export async function POST(req: Request) {
 
     // create a cookie with the userId to be used to retrieve answers
     // specific to this user, and return this response
-    response.cookies.set("userId", user.id, {
-        httpOnly: true,
-        path: "/"
-    });
+    const token = await new SignJWT({ userId: user.id })
+        .setProtectedHeader({ alg: 'HS256' })
+        .setExpirationTime('1h')
+        .sign(new TextEncoder().encode(process.env.JWT_SECRET!));
 
+    response.cookies.set('auth_token', token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax',
+        path: '/',
+    });
     return response;
 }
 
