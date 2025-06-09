@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: var(--width);
+    height: var(--height);
+
+    font-size: var(--small-title-size);
+}
+
+.error {
+    color: red;
+}
