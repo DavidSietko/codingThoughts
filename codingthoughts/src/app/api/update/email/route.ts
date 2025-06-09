@@ -2,17 +2,16 @@ import { VerifyEmail } from "@/components/email/VerifyEmail";
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 import { prisma } from '../../../lib/prismaClient/prismaClient';
-import { cookies } from 'next/headers';
 import { ReactElement } from "react";
+import { getUserIdFromToken } from "@/app/lib/get_cookie/auth";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
-    // get cookies to see if the user has logged in yet
-    const userCookies = await cookies();
-    const userId = userCookies.get("userId")?.value;
-    if (!userId) {
-        throw new Error("Not logged in yet");
+    // try get userId from JSON token
+    const userId = await getUserIdFromToken();
+    if(!userId) {
+        throw new Error("No user ID found");
     }
 
     // get the new email

@@ -1,14 +1,13 @@
 import { prisma } from "@/app/lib/prismaClient/prismaClient";
 import { Answer, Prisma } from "@prisma/client";
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { getUserIdFromToken } from "@/app/lib/get_cookie/auth";
 
 export async function POST(req: Request) {
-    // get cookies to see if the user has logged in yet
-    const userCookies = await cookies();
-    const userId = userCookies.get("userId")?.value;
-    if (!userId) {
-        throw new Error("Not logged in yet");
+    // try get userId from JSON token
+    const userId = await getUserIdFromToken();
+    if(!userId) {
+        throw new Error("No user ID found");
     }
 
     // Get all different search parameters that can be searched with

@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '../../lib/prismaClient/prismaClient';
 import bcrypt from 'bcryptjs';
-import { cookies } from 'next/headers';
 import { SignJWT } from 'jose';
+import { getUserIdFromToken } from "@/app/lib/get_cookie/auth";
 
 export async function POST(req: Request) {
     const {email, password } = await req.json();
@@ -48,14 +48,13 @@ export async function POST(req: Request) {
 }
 
 export async function GET() {
-    // get cookies to see if the user has logged in yet
-    const userCookies = await cookies();
-    const userId = userCookies.get("userId")?.value;
-    if (!userId) {
-        throw new Error("Not logged in yet");
-    }
+    // try get userId from JSON token
+        const userId = await getUserIdFromToken();
+        if(!userId) {
+            throw new Error("No user ID found");
+        }
 
-    // check if cookie exists
+    // check if id exists
     if(!userId) {
         return NextResponse.json({ message: "Not logged in. Please login before proceeding with this action." }, { status: 401 });
     }
