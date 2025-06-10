@@ -72,7 +72,6 @@ export default function Home() {
     const updateEmail = async(): Promise<boolean> => {
         try {
             // get the response of sending the email to new email
-            alert(email);
             const response = await fetch("/api/update/email", {
                 method: "POST",
                 credentials: "include",
@@ -84,14 +83,16 @@ export default function Home() {
                 })
             });
 
+            const data = await response.json();
+
             // check if response was good
             if(!response.ok) {
-                throw new Error("Error occured while sending email");
+                throw new Error(data.message);
             }
             // if good response alert
             alert("EMAIL HAS BEEN SENT");
         } catch(error: any) {
-            alert("Oops... something went wrong sending the email");
+            setEmailErrorMessage(error.message);
         }
         return false;
     }

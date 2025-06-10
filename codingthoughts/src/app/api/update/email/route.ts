@@ -23,6 +23,22 @@ export async function POST(req: Request) {
         return NextResponse.json({ message: "Invalid Email Provided."},  { status: 400 });
     }
 
+    const user = await prisma.user.findUnique({
+        where: {
+            id: userId
+        }
+    });
+
+    // check if token matches a user
+    if(!user) {
+        return NextResponse.json({ message: "Invalid token, account doesnt exist."}, { status: 400 });
+    }
+
+    // check if emails are different for this user
+    if(user.email === newEmail) {
+        return NextResponse.json({ message: "Please enter a new email" }, { status: 400 });
+    }
+
     // create a token for this email to validate it
     const token = await prisma.token.create({
         data: {
