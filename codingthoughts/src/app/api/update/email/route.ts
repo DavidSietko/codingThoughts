@@ -45,7 +45,7 @@ export async function POST(req: Request) {
             userId: userId,
             value: newEmail,
             type: "EMAIL_CHANGE",
-            expiresAt: new Date(Date.now() + 3600 * 1000),
+            expiresAt: new Date(Date.now() + 2 * 60 * 1000).toISOString(),
         },
         include: {
             user: true

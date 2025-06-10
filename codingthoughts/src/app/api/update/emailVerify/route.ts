@@ -57,6 +57,12 @@ export async function POST(req: Request) {
             },
         },
     });
+    // delete current token
+    await prisma.token.delete({
+        where: {
+            id: tokenId
+        }
+    });
     // otherwise all good
     return NextResponse.json({ message: "Email changed successfully. You can close the previous window now and "})
 }

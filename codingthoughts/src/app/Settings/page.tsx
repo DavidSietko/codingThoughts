@@ -13,6 +13,7 @@ export default function Home() {
     const [email, setEmail] = useState<string>("");
     const [usernameErrorMessage, setUsernameErrorMessage] = useState<string>("");
     const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
+    const [originalEmail, setOriginalEmail] = useState<string>("");
 
     useEffect(() => {
         const handler = async() => {
@@ -34,6 +35,7 @@ export default function Home() {
                 // set data and indicate that user logged in
                 setUsername(data.username);
                 setEmail(data.email);
+                setOriginalEmail(data.email);
                 setLoggedIn(true);
             } catch(error: any) {
                 console.log(error.message);
@@ -91,10 +93,55 @@ export default function Home() {
             }
             // if good response alert
             alert("EMAIL HAS BEEN SENT");
+            return await new Promise<boolean>((resolve, reject) => {
+                let intervals = 0;
+                const maxAttempts = 24; // 24 attempts × 5s = 2 minutes
+      
+                const timer = setInterval(async () => {
+                    try {
+                        intervals++;
+
+                        // Check for email updateconsole.log(`email: ${email}`);
+                        const checkResponse = await fetch("/api/update/emailUpdateCheck", {
+                            method: "POST",
+                            credentials: "include",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ email: originalEmail }) // Send original email for comparison
+                        });
+
+                        const checkData = await checkResponse.json();
+
+                        if (!checkResponse.ok) {
+                            clearInterval(timer);
+                            reject(new Error(checkData.message));
+                            return;
+                        }
+
+                        // Success case - email changed in database
+                        if (checkData.status) {
+                            clearInterval(timer);
+                            setEmail(checkData.email); // Update local state
+                            resolve(true); // Return true for success
+                            return;
+                        }
+
+                        // Timeout after 2 minutes
+                        if (intervals >= maxAttempts) {
+                            clearInterval(timer);
+                            reject(new Error("Verification link expired. Please request a new one."));
+                        }
+                } catch (error) {
+                    clearInterval(timer);
+                    reject(error);
+                }
+                }, 5000); // Check every 5 seconds
+            // Cleanup on component unmount
+            return () => clearInterval(timer);
+            });
         } catch(error: any) {
             setEmailErrorMessage(error.message);
+            return false;
         }
-        return false;
     }
 
     if(!loggedIn) {
