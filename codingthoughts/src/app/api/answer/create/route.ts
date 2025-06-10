@@ -7,7 +7,7 @@ export async function POST(req: Request) {
     // try get userId from JSON token
     const userId = await getUserIdFromToken();
     if(!userId) {
-        throw new Error("No user ID found");
+        throw new Error("Not logged in yet. Please log in before continuing.");
     }
 
     // Desctruct the request body to create a new answer for the user

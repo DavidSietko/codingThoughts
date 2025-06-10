@@ -17,7 +17,6 @@ export async function handleLogin(email: string, password: string): Promise<{ me
         throw new Error(data.message || "Login failed");
     }
     // Return the data
-    console.log(data);
     return data;
 }
 

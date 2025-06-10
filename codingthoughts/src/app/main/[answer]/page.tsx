@@ -40,7 +40,6 @@ export default function Home() {
     useEffect(() => {
             const fetchAnswer = async() => {
                 try {
-                    await checkAuth();
                     const response = await fetch(`/api/answer/${params.answer}?id=${id}`, {
                         method: 'GET',
                         credentials: 'include',
@@ -91,7 +90,6 @@ export default function Home() {
 
     const saveAnswer = async() => {
         try {
-            await checkAuth();
             const response = await fetch(`/api/answer/update?id=${id}`, {
                 method: "POST",
                 credentials: 'include',
