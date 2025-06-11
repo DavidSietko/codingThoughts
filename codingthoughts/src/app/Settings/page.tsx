@@ -86,6 +86,10 @@ export default function Home() {
 
     const updateEmail = async(): Promise<boolean> => {
         try {
+            // check if the same email
+            if(email === originalEmail) {
+                throw new Error("Please enter a new email");
+            }
             // get the response of sending the email to new email
             const response = await fetch("/api/update/email", {
                 method: "POST",
@@ -134,6 +138,7 @@ export default function Home() {
                         if (checkData.status) {
                             clearInterval(timer);
                             setEmail(checkData.email); // Update local state
+                            setOriginalEmail(checkData.email);
                             resolve(true); // Return true for success
                             return;
                         }
@@ -152,7 +157,6 @@ export default function Home() {
             return () => clearInterval(timer);
             });
         } catch(error: any) {
-            setUsername(originalUsername);
             setEmailErrorMessage(error.message);
             return false;
         }
