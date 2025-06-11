@@ -15,6 +15,6 @@ export default function ErrorMessage(props: Props) {
     }), [props.errorMessage]);
 
     return(
-    <p className={styles.error}>{props.errorMessage}</p>
+    <span className={styles.error}>{props.errorMessage}</span>
     );
 }

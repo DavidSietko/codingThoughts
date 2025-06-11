@@ -4,6 +4,7 @@ import InfoEntry from "@/components/InfoEntry/InfoEntry";
 import { useEffect, useState } from "react";
 import { checkAuth } from "../lib/auth";
 import ErrorMessage from "@/components/form/ErrorMessage";
+import styles from "./page.module.css";
 
 export default function Home() {
     // boolean to see if user logged in or not
@@ -146,23 +147,24 @@ export default function Home() {
 
     if(!loggedIn) {
         return (
-            <div>
+            <div className={styles.container}>
                 <span>Error. Please log in before continuing</span>
             </div>
         );
     }
     else {
         return (
-            <div>
-                <div>
-                    <div className="entryContainer">
-                        <InfoEntry entry="Username" value={username} setValue={setUsername} updateValue={updateUsername}/>
-                        <ErrorMessage errorMessage={usernameErrorMessage} setErrorMessage={setUsernameErrorMessage} />
-                    </div>
-                    <div>
-                        <InfoEntry entry="Email" value={email} setValue={setEmail} updateValue={updateEmail} />
-                        <ErrorMessage errorMessage={emailErrorMessage} setErrorMessage={setEmailErrorMessage} />
-                    </div>
+            <div className={styles.container}>
+                <div className={styles.entryContainer}>
+                    <InfoEntry entry="Username" value={username} setValue={setUsername} updateValue={updateUsername}/>
+                    <ErrorMessage errorMessage={usernameErrorMessage} setErrorMessage={setUsernameErrorMessage} />
+                </div>
+                <div className={styles.entryContainer}>
+                    <p>Click the change email button to update your email. Once this button is pressed you will be able to enter a new email</p>
+                    <p>Upon entering a new email, click the save button. Once you click save an email will be sent to the new email</p>
+                    <p>In this email will be a verification link that you need to click in order to verify and change your email</p>
+                    <InfoEntry entry="Email" value={email} setValue={setEmail} updateValue={updateEmail} />
+                    <ErrorMessage errorMessage={emailErrorMessage} setErrorMessage={setEmailErrorMessage} />
                 </div>
                 <div>
                     <button>LOGOUT</button>

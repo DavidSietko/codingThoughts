@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '../../../lib/prismaClient/prismaClient';
 import { ReactElement } from "react";
 import { getUserIdFromToken } from "@/app/lib/get_cookie/auth";
+import { User } from "@prisma/client";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -21,6 +22,17 @@ export async function POST(req: Request) {
     // check if valid
     if(!newEmail) {
         return NextResponse.json({ message: "Invalid Email Provided."},  { status: 400 });
+    }
+
+    // check if somebody uses this email
+    const exists: User | null = await prisma.user.findUnique({
+        where: {
+            email: newEmail
+        }
+    });
+
+    if(exists) {
+        return NextResponse.json({ message: "An account with this email exists. Please enter a different email"});
     }
 
     const user = await prisma.user.findUnique({
