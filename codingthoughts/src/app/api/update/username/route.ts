@@ -39,5 +39,5 @@ export async function POST(req: Request) {
     });
 
     //return good response
-    return NextResponse.json({ message: "Username changed successfully" });
+    return NextResponse.json({ message: "Username changed successfully", username: username});
 }

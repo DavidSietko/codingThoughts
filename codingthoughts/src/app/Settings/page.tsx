@@ -15,6 +15,7 @@ export default function Home() {
     const [usernameErrorMessage, setUsernameErrorMessage] = useState<string>("");
     const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
     const [originalEmail, setOriginalEmail] = useState<string>("");
+    const [originalUsername, setOriginalUsername] = useState<string>("");
 
     useEffect(() => {
         const handler = async() => {
@@ -35,6 +36,7 @@ export default function Home() {
                 }
                 // set data and indicate that user logged in
                 setUsername(data.username);
+                setOriginalUsername(data.username);
                 setEmail(data.email);
                 setOriginalEmail(data.email);
                 setLoggedIn(true);
@@ -65,6 +67,8 @@ export default function Home() {
             if(!response.ok) {
                 throw new Error(data.message);
             }
+            setUsername(data.username);
+            setOriginalUsername(data.username);
             return true;
         } catch(error: any) {
             setUsernameErrorMessage(error.message);
@@ -140,6 +144,7 @@ export default function Home() {
             return () => clearInterval(timer);
             });
         } catch(error: any) {
+            setUsername(originalUsername);
             setEmailErrorMessage(error.message);
             return false;
         }
@@ -156,14 +161,14 @@ export default function Home() {
         return (
             <div className={styles.container}>
                 <div className={styles.entryContainer}>
-                    <InfoEntry entry="Username" value={username} setValue={setUsername} updateValue={updateUsername}/>
+                    <InfoEntry entry="Username" value={username} setValue={setUsername} updateValue={updateUsername} originalValue={originalUsername}/>
                     <ErrorMessage errorMessage={usernameErrorMessage} setErrorMessage={setUsernameErrorMessage} />
                 </div>
                 <div className={styles.entryContainer}>
                     <p>Click the change email button to update your email. Once this button is pressed you will be able to enter a new email</p>
                     <p>Upon entering a new email, click the save button. Once you click save an email will be sent to the new email</p>
                     <p>In this email will be a verification link that you need to click in order to verify and change your email</p>
-                    <InfoEntry entry="Email" value={email} setValue={setEmail} updateValue={updateEmail} />
+                    <InfoEntry entry="Email" value={email} setValue={setEmail} updateValue={updateEmail} originalValue={originalEmail} />
                     <ErrorMessage errorMessage={emailErrorMessage} setErrorMessage={setEmailErrorMessage} />
                 </div>
                 <div>

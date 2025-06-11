@@ -21,7 +21,7 @@ export async function POST(req: Request) {
 
     // check if valid
     if(!newEmail) {
-        return NextResponse.json({ message: "Invalid Email Provided."},  { status: 400 });
+        return NextResponse.json({ message: "No Email Provided. Please provide an email."},  { status: 400 });
     }
 
     // check if somebody uses this email
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
     });
 
     if(exists) {
-        return NextResponse.json({ message: "An account with this email exists. Please enter a different email"});
+        return NextResponse.json({ message: "An account with this email exists. Please enter a different email"}, {status: 400});
     }
 
     const user = await prisma.user.findUnique({
