@@ -1,15 +1,38 @@
 .container {
+    position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     width: 600px;
-    height: 500px;
+    height: 300px;
+    color: var(--secondary);
+    background-color: var(--main);
+    border-radius: var(--border-radius);
+    padding: 5px;
+    font-size: 1.3rem;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    margin-top: 50px;
 }
 
 .container button {
-    width: 100px;
-    height: 500px;
+    width: 200px;
+    height: 70px;
     border: none;
     border-radius: var(--border-radius);
+    color: var(--main);
+    background: var(--secondary);
+    font-size: 1.6rem;
+}
+
+.cancelButton {
+    color: var(--secondary)! important;
+    background: red! important;
 }

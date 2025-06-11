@@ -6,6 +6,7 @@ import { checkAuth, handleLogout } from "../lib/auth";
 import ErrorMessage from "@/components/form/ErrorMessage";
 import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
+import DeleteMessage from "@/components/DeleteMessage/DeleteMessage";
 
 export default function Home() {
     // boolean to see if user logged in or not
@@ -17,6 +18,9 @@ export default function Home() {
     const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
     const [originalEmail, setOriginalEmail] = useState<string>("");
     const [originalUsername, setOriginalUsername] = useState<string>("");
+
+    // useState to track if a user is trying to delete their account or not
+    const [deleting, setDeleting] = useState<boolean>(false);
 
     // define router to change route
     const router = useRouter();
@@ -173,21 +177,28 @@ export default function Home() {
     }
     else {
         return (
-            <div className={styles.container}>
-                <div className={styles.entryContainer}>
-                    <InfoEntry entry="Username" value={username} setValue={setUsername} updateValue={updateUsername} originalValue={originalUsername}/>
-                    <ErrorMessage errorMessage={usernameErrorMessage} setErrorMessage={setUsernameErrorMessage} />
-                </div>
-                <div className={styles.entryContainer}>
-                    <p className={styles.text}>Click the change email button to update your email. Once this button is pressed you will be able to enter a new email</p>
-                    <p className={styles.text}>Upon entering a new email, click the save button. Once you click save an email will be sent to the new email</p>
-                    <p className={styles.text}>In this email will be a verification link that you need to click in order to verify and change your email</p>
-                    <InfoEntry entry="Email" value={email} setValue={setEmail} updateValue={updateEmail} originalValue={originalEmail} />
-                    <ErrorMessage errorMessage={emailErrorMessage} setErrorMessage={setEmailErrorMessage} />
-                </div>
-                <div>
-                    <button onClick={logout}>LOGOUT</button>
-                    <button>DELETE ACCOUNT</button>
+            <div className={styles.container} >
+                {deleting && 
+                    <div className={styles.overlay}>
+                        <DeleteMessage deleteFunction={() => {}} cancelFunction={() => setDeleting(false)}/>
+                    </div>
+                }
+                <div className={styles.infoContainer}>
+                    <div className={styles.entryContainer}>
+                        <InfoEntry entry="Username" value={username} setValue={setUsername} updateValue={updateUsername} originalValue={originalUsername}/>
+                        <ErrorMessage errorMessage={usernameErrorMessage} setErrorMessage={setUsernameErrorMessage} />
+                    </div>
+                    <div className={styles.entryContainer}>
+                        <p className={styles.text}>Click the change email button to update your email. Once this button is pressed you will be able to enter a new email</p>
+                        <p className={styles.text}>Upon entering a new email, click the save button. Once you click save an email will be sent to the new email</p>
+                        <p className={styles.text}>In this email will be a verification link that you need to click in order to verify and change your email</p>
+                        <InfoEntry entry="Email" value={email} setValue={setEmail} updateValue={updateEmail} originalValue={originalEmail} />
+                        <ErrorMessage errorMessage={emailErrorMessage} setErrorMessage={setEmailErrorMessage} />
+                    </div>
+                    <div className={styles.buttons}>
+                        <button onClick={logout}>LOGOUT</button>
+                        <button onClick={() => setDeleting(true)}>DELETE ACCOUNT</button>
+                    </div>
                 </div>
             </div>
         );
