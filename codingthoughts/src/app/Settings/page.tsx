@@ -179,9 +179,9 @@ export default function Home() {
                     <ErrorMessage errorMessage={usernameErrorMessage} setErrorMessage={setUsernameErrorMessage} />
                 </div>
                 <div className={styles.entryContainer}>
-                    <p>Click the change email button to update your email. Once this button is pressed you will be able to enter a new email</p>
-                    <p>Upon entering a new email, click the save button. Once you click save an email will be sent to the new email</p>
-                    <p>In this email will be a verification link that you need to click in order to verify and change your email</p>
+                    <p className={styles.text}>Click the change email button to update your email. Once this button is pressed you will be able to enter a new email</p>
+                    <p className={styles.text}>Upon entering a new email, click the save button. Once you click save an email will be sent to the new email</p>
+                    <p className={styles.text}>In this email will be a verification link that you need to click in order to verify and change your email</p>
                     <InfoEntry entry="Email" value={email} setValue={setEmail} updateValue={updateEmail} originalValue={originalEmail} />
                     <ErrorMessage errorMessage={emailErrorMessage} setErrorMessage={setEmailErrorMessage} />
                 </div>
