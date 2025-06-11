@@ -2,9 +2,10 @@
 
 import InfoEntry from "@/components/InfoEntry/InfoEntry";
 import { useEffect, useState } from "react";
-import { checkAuth } from "../lib/auth";
+import { checkAuth, handleLogout } from "../lib/auth";
 import ErrorMessage from "@/components/form/ErrorMessage";
 import styles from "./page.module.css";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
     // boolean to see if user logged in or not
@@ -16,6 +17,9 @@ export default function Home() {
     const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
     const [originalEmail, setOriginalEmail] = useState<string>("");
     const [originalUsername, setOriginalUsername] = useState<string>("");
+
+    // define router to change route
+    const router = useRouter();
 
     useEffect(() => {
         const handler = async() => {
@@ -150,6 +154,16 @@ export default function Home() {
         }
     }
 
+    const logout = async() => {
+        try {
+            const data = await handleLogout();
+            router.push("/");
+        } catch(error: any) {
+            console.log(error.message || "There was an error logging out");
+            router.push("/");
+        }
+    }
+
     if(!loggedIn) {
         return (
             <div className={styles.container}>
@@ -172,7 +186,7 @@ export default function Home() {
                     <ErrorMessage errorMessage={emailErrorMessage} setErrorMessage={setEmailErrorMessage} />
                 </div>
                 <div>
-                    <button>LOGOUT</button>
+                    <button onClick={logout}>LOGOUT</button>
                     <button>DELETE ACCOUNT</button>
                 </div>
             </div>

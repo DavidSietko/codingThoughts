@@ -9,7 +9,7 @@ export async function GET() {
         throw new Error("No user ID found");
     }
 
-    // rget unique user data
+    // get unique user data
     const user = await prisma.user.findUnique({
         where: {id: userId},
         select: {

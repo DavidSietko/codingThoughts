@@ -52,3 +52,18 @@ export async function checkAuth() {
 
     return data;
 }
+
+export async function handleLogout() {
+    const response = await fetch("/api/update/logout", {
+        method: "GET",
+        credentials: "include"
+    });
+    // await the response data
+    const data = await response.json();
+    // check if response valid
+    if(!response.ok) {
+        throw new Error(data.message || "There was an error logging out");
+    }
+
+    return data;
+}
