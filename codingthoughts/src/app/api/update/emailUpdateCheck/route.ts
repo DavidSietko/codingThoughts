@@ -26,5 +26,5 @@ export async function POST(req: Request) {
     if(user.email.toLocaleLowerCase() === email.toLocaleLowerCase()) {
         return NextResponse.json({ message: "Email not updated yet", status: false});
     }
-    return NextResponse.json({message: "Email updated successfully", status: true, email: email});
+    return NextResponse.json({message: "Email updated successfully", status: true, email: user.email});
 }

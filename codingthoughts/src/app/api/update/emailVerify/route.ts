@@ -21,6 +21,10 @@ export async function POST(req: Request) {
         console.log("Token doesnt exist. Invalid ID.");
         return NextResponse.json({ message: errorMessage}, { status: 400 });
     }
+    // check if not expired
+    if(token.expiresAt < new Date()) {
+        return NextResponse.json({ message: "This link has expired. Please save your email again to request a new link."}, { status: 400 });
+    }
     // check token type
     if(token.type != "EMAIL_CHANGE") {
         console.log("Invalid token type");
@@ -64,5 +68,6 @@ export async function POST(req: Request) {
         }
     });
     // otherwise all good
-    return NextResponse.json({ message: "Email changed successfully. You can close the previous window now and "})
+    return NextResponse.json
+    ({ message: "Email changed successfully. You may return to your old window and see your updated account details. Please wait up to 5 seconds if your email has not changed."});
 }
