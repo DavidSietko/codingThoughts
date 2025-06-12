@@ -68,9 +68,3 @@ export async function POST(req: Request) {
         return NextResponse.json({ mesasge: error.message || "There was an error sending the email. Please try again" }, { status: 500 });
     }
 }
-
-// function to generate random password
-function generateRandomPassword(length = 15) {
-    const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
-    return Array.from({ length }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
-}
