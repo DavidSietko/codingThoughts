@@ -43,7 +43,7 @@ export default function LoginForm() {
             <div className={styles.bottom}>
                 <span>OR</span>
                 <div className={styles.linksContainer}>
-                    <a className={styles.links}>Forgot Password?</a>
+                    <a className={styles.links} href="/password-change">Forgot Password?</a>
                     <a className={styles.links} href="/signup" rel="Sign up">Sign up</a>
                 </div>
             </div>

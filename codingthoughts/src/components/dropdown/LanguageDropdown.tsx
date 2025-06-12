@@ -28,7 +28,7 @@ export default function LanguageDropdown(props: Props) {
                 }
             }
         }
-    }, [props.language])
+    }, [props.language]);
 
     if(props.checkLabel) {
         return (

@@ -1,17 +1,17 @@
 import { prisma } from "@/app/lib/prismaClient/prismaClient";
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { getUserIdFromToken } from "@/app/lib/get_cookie/auth";
 
 export async function GET(req: Request, { params }: { params: { answer: string } }) {
-    // get cookies to see if the user has logged in yet
-    const userCookies = await cookies();
-    const userId = userCookies.get("userId")?.value;
-    if (!userId) {
-        throw new Error("Not logged in yet");
+    // try get userId from JSON token
+    const userId = await getUserIdFromToken();
+    if(!userId) {
+        throw new Error("No user ID found");
     }
 
     // get the answer title and id from the url
-    const title: string = params.answer;
+    const {answer} = await params;
+    const title: string = answer;
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
 
@@ -22,7 +22,7 @@ export async function GET(req: Request, { params }: { params: { answer: string }
 
 
     // get the answer from the database
-    const answer = await prisma.answer.findUnique({
+    const answerObject = await prisma.answer.findUnique({
         where: {
             id: parseInt(id),
             userId: userId,
@@ -30,10 +30,10 @@ export async function GET(req: Request, { params }: { params: { answer: string }
         }
     });
 
-    if(!answer) {
+    if(!answerObject) {
         return NextResponse.json({ message: "Answer doesnt exist"}, { status: 400 });
     }
 
     // return the answer
-    return NextResponse.json(answer);
+    return NextResponse.json(answerObject);
 }

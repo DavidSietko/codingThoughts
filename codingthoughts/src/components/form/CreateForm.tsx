@@ -32,9 +32,6 @@ export default function CreateForm() {
                 return;
             }
             try {
-                // check if user logged in
-                await checkAuth();
-
                 // make the post call to create the answer
                 await fetch("/api/answer/create", {
                     method: "POST",

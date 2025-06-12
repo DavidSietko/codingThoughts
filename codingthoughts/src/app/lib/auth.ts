@@ -17,7 +17,6 @@ export async function handleLogin(email: string, password: string): Promise<{ me
         throw new Error(data.message || "Login failed");
     }
     // Return the data
-    console.log(data);
     return data;
 }
 
@@ -50,6 +49,21 @@ export async function checkAuth() {
     }
 
     const data = await response.json();
+
+    return data;
+}
+
+export async function handleLogout() {
+    const response = await fetch("/api/update/logout", {
+        method: "GET",
+        credentials: "include"
+    });
+    // await the response data
+    const data = await response.json();
+    // check if response valid
+    if(!response.ok) {
+        throw new Error(data.message || "There was an error logging out");
+    }
 
     return data;
 }
