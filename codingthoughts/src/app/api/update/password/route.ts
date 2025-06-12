@@ -48,7 +48,7 @@ export async function POST(req: Request) {
     // construct the url to verify the email
     const verifyUrl = `${process.env.BASE_URL}/verify-email?token=${token.id}`;
 
-    // try sending the email to user and updating the password
+    // send the verification email
     try {
         const {error} = await resend.emails.send({
             from: 'mypuzzle12@smtp.greenweb.ie',
@@ -56,16 +56,6 @@ export async function POST(req: Request) {
             subject: 'Password Reset',
             react: PasswordChangeEmail({ verifyUrl: verifyUrl}) as ReactElement,
         });
-
-        await prisma.user.update({
-            where: {
-                email: email
-            },
-            data: {
-                password: hashedPassword
-            }
-        });
-    
         // check for error sending email
         if (error) {
             console.error(error);

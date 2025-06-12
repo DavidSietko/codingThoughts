@@ -4,6 +4,7 @@ import { useState } from "react";
 import ErrorMessage from "./ErrorMessage";
 import { useRouter } from "next/navigation";
 import { handleLogout } from "@/app/lib/auth";
+import styles from "./PasswordChangeForm.module.css";
 
 export default function PasswordChangeForm() {
     // useState for the error message and email
@@ -50,14 +51,16 @@ export default function PasswordChangeForm() {
 
     }
     return (
-        <form>
-            <div>
+        <form className={styles.container}>
+            <div className={styles.text}>
                 <p>Enter the email associated with your account</p>
                 <p>A new password will be sent to this email which you can use to log into your account</p>
                 <p>Upon a successfull email send, you will be logged out and sent to the home page</p>
             </div>
-            <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter email here..."></input>
-            <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter a new password here..."></input>
+            <div className={styles.inputs}>
+                <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter email here..."></input>
+                <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter a new password here..."></input>
+            </div>
             <ErrorMessage errorMessage={errorMessage} setErrorMessage={setErrorMessage}/>
             <button onClick={updatePassword}>SEND</button>
         </form>
