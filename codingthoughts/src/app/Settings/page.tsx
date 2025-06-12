@@ -221,6 +221,7 @@ export default function Home() {
                     <div className={styles.buttons}>
                         <button onClick={logout}>LOGOUT</button>
                         <button onClick={() => setDeleting(true)}>DELETE ACCOUNT</button>
+                        <button onClick={() => router.push("/password-change")}>CHANGE PASSWORD</button>
                     </div>
                 </div>
             </div>
