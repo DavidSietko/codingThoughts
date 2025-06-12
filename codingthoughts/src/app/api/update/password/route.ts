@@ -8,7 +8,10 @@ import { PasswordChangeEmail } from '@/components/email/PasswordChangeEmail';
 
 export async function POST(req: Request) {
     // get the email to send new password to
-    const {email} = await req.json();
+    const {email, password} = await req.json();
+
+    // hash password
+    const hashedPassword: string = await bcrypt.hash(password, 10);
 
     // see if got email
     if(!email) {
@@ -24,9 +27,26 @@ export async function POST(req: Request) {
     if(!user) {
         return NextResponse.json({ message: "There is no account associated with this email. Make sure you entered correct email"}, {status: 400});
     }
-    // generate a new password and hash it for storage
-    const password: string = generateRandomPassword();
-    const hashedPassword: string = await bcrypt.hash(password, 10);
+    // create a token for this email to validate it
+    const token = await prisma.token.create({
+        data: {
+            userId: user.id,
+            value: hashedPassword,
+            type: "PASSWORD_RESET",
+            expiresAt: new Date(Date.now() + 2 * 60 * 1000).toISOString(),
+        },
+        include: {
+            user: true
+        }
+    });
+
+    // check if token created successfully
+    if(!token) {
+        return NextResponse.json({ message: "There was an error creating the token"}, { status: 500 });
+    }
+
+    // construct the url to verify the email
+    const verifyUrl = `${process.env.BASE_URL}/verify-email?token=${token.id}`;
 
     // try sending the email to user and updating the password
     try {
@@ -34,7 +54,7 @@ export async function POST(req: Request) {
             from: 'mypuzzle12@smtp.greenweb.ie',
             to: [email],
             subject: 'Password Reset',
-            react: PasswordChangeEmail({ password: password}) as ReactElement,
+            react: PasswordChangeEmail({ verifyUrl: verifyUrl}) as ReactElement,
         });
 
         await prisma.user.update({

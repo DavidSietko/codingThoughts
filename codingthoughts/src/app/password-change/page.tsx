@@ -1,7 +1,9 @@
+"use client";
+
+import PasswordChangeForm from "@/components/form/PasswordChangeForm";
+
 export default function Home() {
     return (
-        <div>
-            PAGE EXISTS
-        </div>
+        <PasswordChangeForm />
     );
 }

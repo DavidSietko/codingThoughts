@@ -18,13 +18,10 @@ export default function Home() {
     useEffect(() => {
         const handler = async() => {
             try {
-
-                console.log(`TOKEN: ${token}`);
                 // check if token exists
                 if(!token) {
                     throw new Error("Invalid Link. Re-send email and try again");
                 }
-                console.log(`TOKEN: ${token}`);
                 // know token exists, make GET request to validate it
                 const response = await fetch("/api/update/emailVerify", {
                     method: "POST",
