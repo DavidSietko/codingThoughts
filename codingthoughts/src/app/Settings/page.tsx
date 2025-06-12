@@ -22,6 +22,8 @@ export default function Home() {
     // useState to track if a user is trying to delete their account or not
     const [deleting, setDeleting] = useState<boolean>(false);
 
+    const [deleteErrorMessage, setDeleteErrorMessage] = useState<string>("");
+
     // define router to change route
     const router = useRouter();
 
@@ -172,6 +174,23 @@ export default function Home() {
         }
     }
 
+    const deleteAccount = async() => {
+        try {
+            const response = await fetch("/api/update/account", {
+                method: "GET",
+                credentials: "include"
+            });
+            const data = await response.json();
+            if(!response.ok) {
+                throw new Error(data.message);
+            }
+            await handleLogout();
+            router.push("/");
+        } catch(error: any) {
+            setDeleteErrorMessage(error.message);
+        }
+    }
+
     if(!loggedIn) {
         return (
             <div className={styles.container}>
@@ -184,7 +203,7 @@ export default function Home() {
             <div className={styles.container} >
                 {deleting && 
                     <div className={styles.overlay}>
-                        <DeleteMessage deleteFunction={() => {}} cancelFunction={() => setDeleting(false)}/>
+                        <DeleteMessage deleteFunction={deleteAccount} cancelFunction={() => setDeleting(false)} errorMessage={deleteErrorMessage} setErrorMessage={setDeleteErrorMessage}/>
                     </div>
                 }
                 <div className={styles.infoContainer}>
