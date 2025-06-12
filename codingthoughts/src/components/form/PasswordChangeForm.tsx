@@ -12,12 +12,11 @@ export default function PasswordChangeForm() {
     // router to re-route user
     const router = useRouter();
 
-    const sendEmail = async() => {
+    const updatePassword = async() => {
         try {
             // get response of sending email email
             const response =  await fetch("/api/update/password", {
                 method: "POST",
-                credentials: "include",
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -47,7 +46,7 @@ export default function PasswordChangeForm() {
             </div>
             <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter email here..."></input>
             <ErrorMessage errorMessage={errorMessage} setErrorMessage={setErrorMessage}/>
-            <button onClick={sendEmail}>SEND</button>
+            <button onClick={updatePassword}>SEND</button>
         </form>
     );
 }
