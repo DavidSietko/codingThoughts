@@ -7,6 +7,7 @@ import ErrorMessage from "@/components/form/ErrorMessage";
 import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
 import DeleteMessage from "@/components/DeleteMessage/DeleteMessage";
+import isValidEmail from "../lib/auth";
 
 export default function Home() {
     // boolean to see if user logged in or not
@@ -91,6 +92,10 @@ export default function Home() {
             // check if the same email
             if(email === originalEmail) {
                 throw new Error("Please enter a new email");
+            }
+            // check if valid email
+            if(!isValidEmail(email.trim())) {
+                throw new Error("Please enter a valid email in the form example@example.com");
             }
             // get the response of sending the email to new email
             const response = await fetch("/api/update/email", {

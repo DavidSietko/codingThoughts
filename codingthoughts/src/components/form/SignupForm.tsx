@@ -4,6 +4,7 @@ import PasswordEntry from "./PasswordEntry";
 import { handleSignup } from "@/app/lib/auth";
 import ErrorMessage from "./ErrorMessage";
 import { useRouter } from "next/navigation";
+import isValidEmail from "@/app/lib/auth";
 
 export default function SignupForm() {
     // useState for the username, email, password and errorMessage and message display state
@@ -22,6 +23,10 @@ export default function SignupForm() {
         }
         else {
             try {
+                // check if valid email
+                if(!isValidEmail(email.trim())) {
+                    throw new Error("Please enter a valid email in the form example@example.com");
+                }
             const data = await handleSignup(username, email, password);
             router.push("/login");
             }

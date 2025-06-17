@@ -3,7 +3,7 @@
 import { useState } from "react";
 import ErrorMessage from "./ErrorMessage";
 import { useRouter } from "next/navigation";
-import { handleLogout } from "@/app/lib/auth";
+import isValidEmail, { handleLogout } from "@/app/lib/auth";
 import styles from "./PasswordChangeForm.module.css";
 
 export default function PasswordChangeForm() {
@@ -21,6 +21,10 @@ export default function PasswordChangeForm() {
         try {
             if(!email.trim()) {
                 throw new Error("Please enter an email");
+            }
+            // check if valid email
+            if(!isValidEmail(email.trim())) {
+                throw new Error("Please enter a valid email in the form example@example.com");
             }
             if(!password.trim()) {
                 throw new Error("Please enter in a password");
