@@ -6,7 +6,7 @@ export default function Navbar() {
     return (
         <div className={styles.container}>
             <div className={styles.left}>
-                <Image className={styles.logo} src="/logo/lightbulb_logo1.png" width={100} height={100} alt="LOGO"></Image>
+                <Image className={styles.logo} src="/logo/lightbulb_logo.svg" width={100} height={100} alt="LOGO"></Image>
                 <a href="/">Home</a>
             </div>
             <div className={styles.tags}>
