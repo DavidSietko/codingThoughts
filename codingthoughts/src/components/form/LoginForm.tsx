@@ -23,10 +23,6 @@ export default function LoginForm() {
         }
         else {
             try {
-                // check if valid email
-                if(!isValidEmail(email.trim())) {
-                    throw new Error("Please enter a valid email in the form example@example.com");
-                }
                 const data = await handleLogin(email, password);
                 router.push("/main");
             } catch (error: any) {
