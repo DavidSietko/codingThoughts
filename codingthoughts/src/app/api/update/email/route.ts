@@ -72,7 +72,7 @@ export async function POST(req: Request) {
 
     try {
         const { data, error } = await resend.emails.send({
-            from: 'mypuzzle12@smtp.greenweb.ie',
+            from: 'CodingThoughts@smtp.greenweb.ie',
             to: [newEmail],
             subject: 'Email Change',
             react: VerifyEmail({ username: token.user.username, verifyUrl: verifyUrl}) as ReactElement,

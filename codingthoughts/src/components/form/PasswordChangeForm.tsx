@@ -54,7 +54,7 @@ export default function PasswordChangeForm() {
         <form className={styles.container}>
             <div className={styles.text}>
                 <p>Enter the email associated with your account</p>
-                <p>A new password will be sent to this email which you can use to log into your account</p>
+                <p>A verification link will be sent to this email which you need to click to verify your password change</p>
                 <p>Upon a successfull email send, you will be logged out and sent to the home page</p>
             </div>
             <div className={styles.inputs}>

@@ -25,7 +25,7 @@ input:hover {
   --main: blue;
   --secondary: white;
 
-  --navbar-height: 80px;
+  --navbar-height: 100px;
 
   --width: 100vw;
   --height: calc(100dvh - var(--navbar-height));

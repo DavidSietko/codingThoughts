@@ -51,7 +51,7 @@ export async function POST(req: Request) {
     // send the verification email
     try {
         const {error} = await resend.emails.send({
-            from: 'mypuzzle12@smtp.greenweb.ie',
+            from: `CodingThoughts@smtp.greenweb.ie`,
             to: [email],
             subject: 'Password Reset',
             react: PasswordChangeEmail({ verifyUrl: verifyUrl}) as ReactElement,

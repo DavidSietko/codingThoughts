@@ -2,7 +2,7 @@ import styles from "./Navbar.module.css";
 import Image from 'next/image';
 
 export default function Navbar() {
-    let list: string[] = ["login", "signup", "About", "Settings"];
+    let list: string[] = ["main", "login", "signup", "Settings"];
     return (
         <div className={styles.container}>
             <div className={styles.left}>
