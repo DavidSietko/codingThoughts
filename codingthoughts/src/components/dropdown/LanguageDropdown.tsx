@@ -18,21 +18,21 @@ interface Props {
     checkLabel: boolean;
 }
 
-export default function LanguageDropdown(props: Props) {
+export default function LanguageDropdown({ language, setLanguage, checkLabel }: Props) {
 
     useEffect(() => {
-        if(!props.checkLabel) {
-            for(let l of languageOptions) {
-                if(l.label === props.language) {
-                    props.setLanguage(l.value);
+        if(!checkLabel) {
+            for(const l of languageOptions) {
+                if(l.label === language) {
+                    setLanguage(l.value);
                 }
             }
         }
-    }, [props.language]);
+    }, [language]);
 
-    if(props.checkLabel) {
+    if(checkLabel) {
         return (
-            <select className={styles.container} value={props.language} onChange={(e) => props.setLanguage(e.target.value)}>
+            <select className={styles.container} value={language} onChange={(e) => setLanguage(e.target.value)}>
                 <option value={""}>Select a Language</option>
                 {languageOptions.map((language) => (
                     <option key={language.label} value={language.label}>{language.label}</option>
@@ -42,7 +42,7 @@ export default function LanguageDropdown(props: Props) {
     }
     else {
         return (
-            <select className={styles.container} value={props.language} onChange={(e) => props.setLanguage(e.target.value)}>
+            <select className={styles.container} value={language} onChange={(e) => setLanguage(e.target.value)}>
                 <option value={""}>Select a Language</option>
                     {languageOptions.map((language) => (
                  <option key={language.value} value={language.value}>{language.label}</option>
