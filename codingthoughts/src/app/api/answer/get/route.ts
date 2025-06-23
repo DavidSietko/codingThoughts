@@ -18,25 +18,25 @@ export async function POST(req: Request) {
         ...(number && { 
             number: {
                 contains: number,
-                lte: "insensitive",
+                mode: "insensitive",
             },
         }),
         ...(title && {
             title: {
             contains: title,
-            lte: 'insensitive',
+            mode: 'insensitive',
             },
         }),
         ...(difficulty && {
             difficulty: {
             contains: difficulty,
-            lte: 'insensitive',
+            mode: 'insensitive',
             },
         }),
         ...(language && {
             language: {
-            contains: language,
-            lte: 'insensitive',
+            equals: language,
+            mode: 'insensitive',
             },
         }),
     };
