@@ -1,5 +1,5 @@
 import { prisma } from "@/app/lib/prismaClient/prismaClient";
-import { Answer, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
 import { getUserIdFromToken } from "@/app/lib/get_cookie/auth";
 

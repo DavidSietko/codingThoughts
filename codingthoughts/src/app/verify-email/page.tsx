@@ -1,10 +1,12 @@
 "use client";
-import ErrorMessage from "@/components/form/ErrorMessage";
+
+export const dynamic = "force-dynamic"; // 👈 disables static rendering for this route
+
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import styles from "./page.module.css";
 
-export default function Home() {
+function Home() {
     // message to show user status after backend call
     const [message, setMessage] = useState<string>("");
     const [success, setSuccess] = useState<boolean>(false);
@@ -33,19 +35,21 @@ export default function Home() {
                 });
 
                 const data = await response.json();
-                if(!response) {
+                if(!response.ok) {
                     throw new Error(data.message);
                 }
                 setLoading(false);
                 setSuccess(true);
                 setMessage(data.message);
-            } catch(error: any) {
+            } catch(error: unknown) {
                 setLoading(false);
-                setMessage(error.message);
+                if(error instanceof Error) {
+                    setMessage(error.message);
+                }
             }
         }
         handler();
-    }, []);
+    }, [token]);
 
     if(loading) {
         return (
@@ -59,4 +63,12 @@ export default function Home() {
             </div>
         );
     }
+}
+
+export default function Page() {
+    return (
+        <Suspense fallback={<header className={styles.container}>Loading...</header>}>
+            <Home />
+        </Suspense>
+    );
 }

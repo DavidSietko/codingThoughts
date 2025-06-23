@@ -58,8 +58,10 @@ export default function AnswerBox(props: Props) {
             props.setAnswers(data);
             setIndex(null);
             setCurrentId(null);
-        } catch(error: any) {
-            alert(error.message);
+        } catch(error: unknown) {
+            if(error instanceof Error) {
+                alert(error.message);
+            }
         }
     }
 
@@ -71,8 +73,10 @@ export default function AnswerBox(props: Props) {
                 try {
                     const data = await fetchData(props.number, props.title, props.difficulty, props.language);
                     props.setAnswers(data);
-                } catch (error: any) {
-                    console.log(error.message);
+                } catch (error: unknown) {
+                    if(error instanceof Error) {
+                        console.log(error.message);
+                    }
                 }
             })();
         }, 300);

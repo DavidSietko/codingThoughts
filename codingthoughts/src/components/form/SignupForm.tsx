@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styles from "./LoginForm.module.css";
 import PasswordEntry from "./PasswordEntry";
 import { handleSignup } from "@/app/lib/auth";
@@ -28,10 +28,13 @@ export default function SignupForm() {
                     throw new Error("Please enter a valid email in the form example@example.com");
                 }
             const data = await handleSignup(username, email, password);
+            console.log(data);
             router.push("/login");
             }
-            catch(error: any) {
-                setErrorMessage(error.message);
+            catch(error: unknown) {
+                if(error instanceof Error) {
+                    setErrorMessage(error.message);
+                }
             }
         }
     }

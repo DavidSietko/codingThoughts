@@ -24,12 +24,15 @@ export default function Home() {
         const verifyAuth = async() => {
             try {
                 await checkAuth();
-            } catch(error: any) {
+            } catch(error: unknown) {
+                if(error instanceof Error) {
+                    console.log(error);
+                }
                 router.push("/login");
             }
         }
         verifyAuth();
-    }, []);
+    }, [router]);
 
     return(
         <div className={styles.container}>

@@ -51,8 +51,10 @@ export default function Home() {
                 setEmail(data.email);
                 setOriginalEmail(data.email);
                 setLoggedIn(true);
-            } catch(error: any) {
-                console.log(error.message);
+            } catch(error: unknown) {
+                if(error instanceof Error) {
+                    console.log(error);
+                }
                 setLoggedIn(false);
             }
         };
@@ -81,8 +83,10 @@ export default function Home() {
             setUsername(data.username);
             setOriginalUsername(data.username);
             return true;
-        } catch(error: any) {
-            setUsernameErrorMessage(error.message);
+        } catch(error: unknown) {
+            if(error instanceof Error) {
+                setUsernameErrorMessage(error.message);
+            }
             return false;
         }
     }
@@ -163,8 +167,10 @@ export default function Home() {
             // Cleanup on component unmount
             return () => clearInterval(timer);
             });
-        } catch(error: any) {
-            setEmailErrorMessage(error.message);
+        } catch(error: unknown) {
+            if(error instanceof Error) {
+                setEmailErrorMessage(error.message);
+            }
             return false;
         }
     }
@@ -172,9 +178,10 @@ export default function Home() {
     const logout = async() => {
         try {
             const data = await handleLogout();
+            console.log(data.message);
             router.push("/");
-        } catch(error: any) {
-            console.log(error.message || "There was an error logging out");
+        } catch(error: unknown) {
+            console.log(error instanceof Error ? error.message : "There was an error logging you out");
             router.push("/");
         }
     }
@@ -191,8 +198,10 @@ export default function Home() {
             }
             await handleLogout();
             router.push("/");
-        } catch(error: any) {
-            setDeleteErrorMessage(error.message);
+        } catch(error: unknown) {
+            if(error instanceof Error) {
+                setDeleteErrorMessage(error.message);
+            }
         }
     }
 

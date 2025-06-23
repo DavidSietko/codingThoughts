@@ -4,8 +4,6 @@ import PasswordEntry from "./PasswordEntry";
 import { useRouter } from "next/navigation";
 import { handleLogin } from "@/app/lib/auth";
 import ErrorMessage from "./ErrorMessage";
-import isValidEmail from "@/app/lib/auth";
-
 
 export default function LoginForm() {
     // useState for the email, password and errorMessage
@@ -24,10 +22,13 @@ export default function LoginForm() {
         else {
             try {
                 const data = await handleLogin(email, password);
+                console.log(data.message);
                 router.push("/main");
-            } catch (error: any) {
+            } catch (error: unknown) {
                 // Show user-friendly error
-                setErrorMessage(error.message);
+                if(error instanceof Error) {
+                    setErrorMessage(error.message);
+                }
             }
         }
     }

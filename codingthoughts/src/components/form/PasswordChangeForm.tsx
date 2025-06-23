@@ -49,8 +49,10 @@ export default function PasswordChangeForm() {
             // if ok response, redirect to homepage
             await handleLogout();
             router.push("/login");
-        } catch(error: any) {
-            setErrorMessage(error.message);
+        } catch(error: unknown) {
+            if(error instanceof Error) {
+                setErrorMessage(error.message);
+            }
         }
 
     }

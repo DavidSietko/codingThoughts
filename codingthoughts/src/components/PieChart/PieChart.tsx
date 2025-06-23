@@ -9,7 +9,6 @@ import {
   Legend,
   Title
 } from 'chart.js';
-import { color } from "chart.js/helpers";
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 

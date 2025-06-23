@@ -1,7 +1,5 @@
 "use client";
 
-import { checkAuth } from "@/app/lib/auth";
-import { Answer } from "@/app/lib/types/Answer";
 import { useEffect, useState } from "react";
 import { useSearchParams, useParams } from 'next/navigation';
 import styles from "./page.module.css";
@@ -13,7 +11,6 @@ import isValidUrl from "@/app/lib/link/videoLink";
 
 export default function Home() {
     // useState for all needed values
-    const [currentAnswer, setCurrentAnswer] = useState<Answer>();
     const [number, setNumber] = useState<string>("");
     const [title, setTitle] = useState<string>("");
     const [difficulty, setDifficulty] = useState<string>("");
@@ -53,7 +50,6 @@ export default function Home() {
                     }
                     
                     const data = await response.json();
-                    setCurrentAnswer(data);
                     setNumber(data.number);
                     setTitle(data.title);
                     setDifficulty(data.difficulty);
@@ -65,13 +61,15 @@ export default function Home() {
                     setTimeout(() => {
                         setIsInitializing(false);
                     }, 2000);
-                } catch(error: any) {
-                    console.log(error.message);
+                } catch(error: unknown) {
+                    if(error instanceof Error) {
+                        console.log(error.message);
+                    }
                     setNotFound(true);
                 }
             }
             fetchAnswer();
-    }, []);
+    }, [params.answer, id]);
 
     const changeValue = (value: string, setValue: React.Dispatch<React.SetStateAction<string>>) => {
         setValue(value);
@@ -86,7 +84,7 @@ export default function Home() {
         if(!isInitializing) {
             setUpdated(true);
         }
-    }, [number, title, language, difficulty, description, explanation, code, link]);
+    }, [number, title, language, difficulty, description, explanation, code, link, isInitializing]);
 
     const saveAnswer = async() => {
         try {
@@ -110,12 +108,13 @@ export default function Home() {
             const data = await response.json();
 
             if(!response.ok) {
-                alert("Problemo");
                 throw new Error(data.message);
             }
             router.push("/main");
-        } catch(error: any) {
-            setErrorMessage(error.message);
+        } catch(error: unknown) {
+            if(error instanceof Error) {
+                setErrorMessage(error.message);
+            }
         }
     }
 

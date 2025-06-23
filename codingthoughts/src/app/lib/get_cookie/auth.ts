@@ -19,6 +19,7 @@ export async function getUserIdFromToken(): Promise<string | null> {
         }
         return payload.userId as string;
     } catch(error) {
+        console.log(error);
         return null;
     }
 }

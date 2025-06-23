@@ -63,8 +63,10 @@ export async function POST(req: Request) {
         }
         // success
         return NextResponse.json({ message: "Password change successfull"});
-    } catch (error: any) {
-        console.error(error);
-        return NextResponse.json({ mesasge: error.message || "There was an error sending the email. Please try again" }, { status: 500 });
+    } catch (error: unknown) {
+        if(error instanceof Error) {
+            console.log(error.message);
+        }
+        return NextResponse.json({ mesasge: error instanceof Error ? error.message : "There was an error sending the email. Please try again" }, { status: 500 });
     }
 }

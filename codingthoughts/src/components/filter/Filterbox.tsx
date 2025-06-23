@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Answer } from "@/app/lib/types/Answer";
 import styles from "./Filterbox.module.css"
 import DifficultyDropdown from "../dropdown/DifficultyDropdown";
@@ -31,8 +31,10 @@ export default function Filterbox(props: Props) {
                 const mediumCount: number = data.filter((answer: { difficulty: string }) => answer.difficulty === "Medium").length;
                 const hardCount: number = data.filter((answer: { difficulty: string }) => answer.difficulty === "Hard").length;
                 setData([easyCount, mediumCount, hardCount]);
-            } catch(error: any) {
-                console.log(error.message);
+            } catch(error: unknown) {
+                if(error instanceof Error) {
+                    console.log(error.message);
+                }
             }
         }
 

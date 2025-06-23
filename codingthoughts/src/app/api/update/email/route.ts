@@ -84,8 +84,10 @@ export async function POST(req: Request) {
         }
 
         return NextResponse.json(data);
-    } catch (error: any) {
-        console.log(error);
-        return NextResponse.json({ mesasge: error.message }, { status: 500 });
+    } catch (error: unknown) {
+        if(error instanceof Error) {
+            console.log(error.message);   
+        }
+        return NextResponse.json({ mesasge: error instanceof Error ? error.message : "There was an error sending you an email" }, { status: 500 });
     }
 }

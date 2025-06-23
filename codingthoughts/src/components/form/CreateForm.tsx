@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styles from "./CreateForm.module.css";
 import ErrorMessage from "./ErrorMessage";
-import { checkAuth } from "@/app/lib/auth";
 import { useRouter } from "next/navigation";
 import DifficultyDropdown from "../dropdown/DifficultyDropdown";
 import isValidUrl from "@/app/lib/link/videoLink";
@@ -53,8 +52,10 @@ export default function CreateForm() {
                 // answer created successfully, go back to main page
                 router.push("/main");
 
-            } catch(error: any) {
-                setErrorMessage(error.message);
+            } catch(error: unknown) {
+                if(error instanceof Error) {
+                    setErrorMessage(error.message);
+                }
             }
         }
     }

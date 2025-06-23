@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
 import ParticlesBackground from "@/components/background/ParticlesBackground";
@@ -16,7 +15,10 @@ export default function Home() {
     try {
       await checkAuth();
       router.push("/main");
-    } catch(error: any) {
+    } catch(error: unknown) {
+      if(error instanceof Error) {
+        console.log(error);
+      }
       router.push("/login");
     }
   }

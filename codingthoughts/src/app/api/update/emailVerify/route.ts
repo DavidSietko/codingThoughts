@@ -63,7 +63,7 @@ export async function POST(req: Request) {
             where: {
                 id: tokenId
             }
-        });6
+        });
         return NextResponse.json({ message: "Password changed successfully, you may log in to your account now."});
     }
     else {
@@ -78,7 +78,6 @@ export async function POST(req: Request) {
             return NextResponse.json({ message: errorMessage }, { status: 500 });
         }
         // otherwise all good
-        return NextResponse.json
-        ({ message: "Email changed successfully. You may return to your old window and see your updated account details. Please wait up to 5 seconds if your email has not changed."});
+        return NextResponse.json({ message: "Email changed successfully. You may return to your old window and see your updated account details. Please wait up to 5 seconds if your email has not changed."});
     }
 }

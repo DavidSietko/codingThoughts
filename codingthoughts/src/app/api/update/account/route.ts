@@ -21,8 +21,13 @@ export async function GET() {
                 id: userId
             }
         });
-    } catch(error: any) {
-        return NextResponse.json({ message: "There was an error with deleting your account"}, {status: 400});
+    } catch(error: unknown) {
+        if (error instanceof Error) {
+            console.log(error.message);
+        } else {
+            console.log(error);
+        }
+        return NextResponse.json({ message: "There was an error with deleting your account" }, {status: 400});
     }
     // Clean response can return success
     return NextResponse.json({ message: "Account deleted successfully" });

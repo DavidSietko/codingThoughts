@@ -6,15 +6,15 @@ interface Props {
     setErrorMessage: React.Dispatch<React.SetStateAction<string>>
 }
 
-export default function ErrorMessage(props: Props) {
+export default function ErrorMessage({ errorMessage, setErrorMessage }: Props) {
     // useEffect hook to re-render to display the errorMessage
     useEffect((() => {
         setTimeout(() => {
-            props.setErrorMessage("");
+            setErrorMessage("");
         }, 4000);
-    }), [props.errorMessage]);
+    }), [errorMessage, setErrorMessage]);
 
     return(
-    <p className={styles.error}>{props.errorMessage}</p>
+    <p className={styles.error}>{errorMessage}</p>
     );
 }

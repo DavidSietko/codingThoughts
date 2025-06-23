@@ -17,7 +17,7 @@ export async function handleLogin(email: string, password: string): Promise<{ me
         throw new Error(data.message || "Login failed");
     }
     // Return the data
-    return data;
+    return {message: "successful login"};
 }
 
 export async function handleSignup(username: string, email: string, password: string): Promise<{ message: string }> {
@@ -34,7 +34,7 @@ export async function handleSignup(username: string, email: string, password: st
         if (!response.ok) {
             throw new Error(data.message || "Signup failed");
         }
-        return data;
+        return {message: "successful signup"};
 }
 
 export async function checkAuth() {
@@ -65,7 +65,7 @@ export async function handleLogout() {
         throw new Error(data.message || "There was an error logging out");
     }
 
-    return data;
+    return {message: "successful logout"};
 }
 
 export default function isValidEmail(email: string): boolean {

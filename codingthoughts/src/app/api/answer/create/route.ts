@@ -1,5 +1,4 @@
 import { prisma } from "@/app/lib/prismaClient/prismaClient";
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { getUserIdFromToken } from "@/app/lib/get_cookie/auth";
 
