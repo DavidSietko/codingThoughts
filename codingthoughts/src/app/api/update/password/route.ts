@@ -3,10 +3,11 @@ import { prisma } from '../../../lib/prismaClient/prismaClient';
 import { ReactElement } from "react";
 import { User } from '@prisma/client';
 import bcrypt from 'bcryptjs';
-import { resend } from '@/app/lib/resendClient';
+import createResendClient from '@/app/lib/resendClient';
 import { PasswordChangeEmail } from '@/components/email/PasswordChangeEmail';
 
 export async function POST(req: Request) {
+    const resend = createResendClient();
     // get the email to send new password to
     const {email, password} = await req.json();
 

@@ -1,5 +1,5 @@
 import { VerifyEmail } from "@/components/email/VerifyEmail";
-import { resend } from "@/app/lib/resendClient";
+import createResendClient from "@/app/lib/resendClient";
 import { NextResponse } from 'next/server';
 import { prisma } from '../../../lib/prismaClient/prismaClient';
 import { ReactElement } from "react";
@@ -7,6 +7,7 @@ import { getUserIdFromToken } from "@/app/lib/get_cookie/auth";
 import { User } from "@prisma/client";
 
 export async function POST(req: Request) {
+    const resend = createResendClient();
     // try get userId from JSON token
     const userId = await getUserIdFromToken();
     if(!userId) {
