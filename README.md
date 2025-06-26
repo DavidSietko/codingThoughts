@@ -1,6 +1,7 @@
 # codingThoughts
 This is a website that allows users to save and log leetcode style answers.
-Visit codingthoughts.net for the website.
+
+Visit https://codingthoughts.net for the website.
 
 Simply create an account, log in, and start saving your leetcode answers!
 ![image](https://github.com/user-attachments/assets/2f0aee9a-dbe2-4081-aebc-1fb512c63a0f)
